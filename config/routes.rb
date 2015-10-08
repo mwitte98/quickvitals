@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  root 'patient#search'
+
+  match '/record', to: 'patient#record', via: 'get'
+  match '/tasks',  to: 'patient#tasks',  via: 'get'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
