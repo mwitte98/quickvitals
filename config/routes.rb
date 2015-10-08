@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
-  root 'patient#search'
+  root 'patient#home'
 
+  match '/new',    to: 'patient#new',    via: 'get'
+  match '/search', to: 'patient#search', via: 'get'
   match '/record', to: 'patient#record', via: 'get'
   match '/tasks',  to: 'patient#tasks',  via: 'get'
 
