@@ -1,26 +1,38 @@
 class PatientController < ApplicationController
 
-  add_breadcrumb "home", :root_path
+  add_breadcrumb "Home", :root_path
 
   def home
   end
   
-  def new
-    add_breadcrumb "new patient", new_path
+  def registerpatient
+    add_breadcrumb "Register Patient", registerpatient_path
   end
   
   def search
-    add_breadcrumb "search", search_path
+    add_breadcrumb "Search", search_path
   end
 
-  def record
-    add_breadcrumb "search", search_path
-    add_breadcrumb "patient 1", record_path
+  def chart
+    add_breadcrumb "Search", search_path
+    add_breadcrumb "Patient 1 Chart", chart_path
+  end
+  
+  def editpatient
+    add_breadcrumb "Search", search_path
+    add_breadcrumb "Patient 1 Chart", chart_path
+    add_breadcrumb "Edit Patient 1 Profile", editpatient_path
+  end
+  
+  def vitals
+    add_breadcrumb "Search", search_path
+    add_breadcrumb "Patient 1 Chart", chart_path
+    add_breadcrumb "Patient 1 Vitals", vitals_path
   end
 
   def tasks
-    add_breadcrumb "search", search_path
-    add_breadcrumb "patient 1", record_path
-    add_breadcrumb "tasks", tasks_path
+    add_breadcrumb "Search", search_path
+    add_breadcrumb "Patient 1 Chart", chart_path
+    add_breadcrumb "Completed Tasks", tasks_path
   end
 end
