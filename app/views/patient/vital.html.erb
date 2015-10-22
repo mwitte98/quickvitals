@@ -1,0 +1,31 @@
+<% provide(:title, "Vital #{@vitalID}") %>
+<body>
+	<div class="container">
+		<h1>Vital <%= @vitalID %></h1>
+		<p>Insert detailed graph here</p>
+		<table>
+			<tr>
+				<th>Date</th>
+				<th>Time</th>
+				<th>Value</th>
+			</tr>
+			<tr>
+				<td>Date1</td>
+				<td>Time1</td>
+				<td>Value1</td>
+			</tr>
+			<tr>
+				<td>Date2</td>
+				<td>Time2</td>
+				<td>Value2</td>
+			</tr>
+			<tr>
+				<td>Date3</td>
+				<td>Time3</td>
+				<td>Value3</td>
+			</tr>
+		</table>
+		<br>
+		<%= link_to "Add measurement", vital_path(@vitalID), {class: "btn btn-md btn-primary"} %>
+	</div>
+</body>

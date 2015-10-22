@@ -24,10 +24,19 @@ class PatientController < ApplicationController
     add_breadcrumb "Edit Patient 1 Profile", editpatient_path
   end
   
-  def vitals
+  def vitalsOverview
     add_breadcrumb "Search", search_path
     add_breadcrumb "Patient 1 Chart", chart_path
-    add_breadcrumb "Patient 1 Vitals", vitals_path
+    add_breadcrumb "Patient 1 Vitals", vitalsOverview_path
+    @vitals = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+  end
+  
+  def vital
+    @vitalID = params[:id]
+    add_breadcrumb "Search", search_path
+    add_breadcrumb "Patient 1 Chart", chart_path
+    add_breadcrumb "Patient 1 Vitals", vitalsOverview_path
+    add_breadcrumb "Vital #{@vitalID}", vital_path(@vitalID)
   end
 
   def tasks
