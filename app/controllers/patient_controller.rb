@@ -6,11 +6,11 @@ class PatientController < ApplicationController
 
   def home
   end
-  
+
   def registerpatient
     add_breadcrumb "Register Patient", registerpatient_path
   end
-  
+
   def search
     add_breadcrumb "Search", search_path
   end
@@ -22,7 +22,7 @@ class PatientController < ApplicationController
     add_breadcrumb "Search", search_path
     add_breadcrumb "#{@patientName} Chart", chart_path(@patientID)
   end
-  
+
   def editpatient
     @patientID = params[:patientid]
     @patient = @patients[@patientID]
@@ -31,15 +31,23 @@ class PatientController < ApplicationController
     add_breadcrumb "#{@patientName} Chart", chart_path(@patientID)
     add_breadcrumb "Edit #{@patientName} Profile", editpatient_path(@patientID)
   end
-  
+
   def vitalsOverview
     @patientID = params[:patientid]
     @patientName = @patients[@patientID][:firstName] + " " + @patients[@patientID][:lastName]
     add_breadcrumb "Search", search_path
+
     add_breadcrumb "#{@patientName} Chart", chart_path(@patientID)
     add_breadcrumb "#{@patientName} Vitals", vitalsOverview_path(@patientID)
+
+    @vitals = [
+      {:name => "Heart Rate", :id => 1},
+      {:name => "Blood Pressure", :id => 2},
+      {:name => "Respiration Rate", :id => 3},
+      {:name => "Temperature", :id => 4}
+    ]
   end
-  
+
   def vital
     @patientID = params[:patientid]
     @patientName = @patients[@patientID][:firstName] + " " + @patients[@patientID][:lastName]
@@ -59,8 +67,6 @@ class PatientController < ApplicationController
     add_breadcrumb "#{@patientName} Chart", chart_path(@patientID)
     add_breadcrumb "#{@patientName} Completed Tasks", tasks_path(@patientID)
   end
-  
-protected
 
   def set_variables
     @vitals = {
