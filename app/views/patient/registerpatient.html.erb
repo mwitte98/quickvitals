@@ -26,16 +26,18 @@
 					</div>
 					<div class="col-sm-2">
 						<select id="start_date_year" name="start_date[year]">
-							<% (31).times do |i| %>
-								<option value=></option>
+							<% for i in 1..31 do %>
+								<option value="<%=i%>"><%=i%></option>
 							<% end %>
 						</select>
 					</div>
 					<div class="col-sm-4">
-							<select>
-								<option value="jan">January</option>
-								<option value="feb">February</option>
-							</select>
+						<select>
+							<option value="blank"> </option>
+							<% for i in 1900..2015 do %>
+								<option value="<%=i%>"><%=i%></option>
+							<% end %>
+						</select>
 					</div>
 				</div>
 
