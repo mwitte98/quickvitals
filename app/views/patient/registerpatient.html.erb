@@ -2,8 +2,99 @@
 <body>
 	<div class="container">
 		<h1>Register Patient</h1>
-		<p>Name:</p>
-		<p>Address:</p>
-		<%= link_to "Create", {controller: :patient, action: "home"}, {class: "btn btn-md btn-primary"} %>
+
+		<div class="col-sm-6">
+				<div class="row">
+					<div class="col-sm-3">
+						<p>Name</p>
+					</div>
+					<div class="col-sm-9">
+						<input type="text" class="form-control">
+					</div>
+				</div>
+
+				<div class="row" style="margin-top:10px">
+
+					<div class="col-sm-3">
+						<p>Date of Birth</p>
+					</div>
+					<div class="col-sm-3">
+							<select>
+								<option value="jan">January</option>
+								<option value="feb">February</option>
+							</select>
+					</div>
+					<div class="col-sm-2">
+						<select id="start_date_year" name="start_date[year]">
+							<% (31).times do |i| %>
+								<option value=></option>
+							<% end %>
+						</select>
+					</div>
+					<div class="col-sm-4">
+							<select>
+								<option value="jan">January</option>
+								<option value="feb">February</option>
+							</select>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<p>Address</p>
+					</div>
+					<div class="col-sm-9">
+						<ul class="list-unstyled">
+								<li><input type="text" class="form-control"></li>
+								<br>
+								<li><input type="text" class="form-control"></li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3" style>
+						<p>Medical History</p>
+					</div>
+					<div class="col-sm-9">
+						<textarea type="text" class="form-control" style="height: 100px"></textarea>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<p>Allergies</p>
+					</div>
+					<div class="col-sm-9">
+						Pollen <input type="checkbox">
+						Dust Mites <input type="checkbox">
+						Penicillin <input type="checkbox">
+						Cats/Dogs <input type="checkbox">
+						<div>
+							Other <input type="text">
+						</div>
+					</div>
+				</div>
+		</div>
+		<div class="col-sm-4">
+			<div class="row">
+				<img alt="Picture" height="300" width="300" class="pull-right">
+			</div>
+			<br>
+			<div class="row">
+				<%= link_to "Take Picture", {controller: :patient, action: "home"}, {class: "btn btn-md btn-primary pull-right"} %>
+			</div>
+			<br>
+			<br>
+			<br>
+			<br>
+			<div class="row">
+				<%= link_to "Register", {controller: :patient, action: "home"}, {class: "btn btn-md btn-primary pull-right"} %>
+				<%= link_to "Cancel", {controller: :patient, action: "home"}, {class: "btn btn-md btn-primary pull-right"} %>
+
+			</div>
+
+		</div>
+
 	</div>
 </body>
