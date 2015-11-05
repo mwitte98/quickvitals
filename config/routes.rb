@@ -3,11 +3,11 @@ Rails.application.routes.draw do
 
   match '/registerpatient', to: 'patient#registerpatient', via: 'get'
   match '/search', to: 'patient#search', via: 'get'
-  match '/chart', to: 'patient#chart', via: 'get'
-  match '/editpatient', to: 'patient#editpatient', via: 'get'
-  match '/vitalsOverview', to: 'patient#vitalsOverview', via: 'get'
-  match '/vital/:id', to: 'patient#vital', via: ['get', 'post'], as: 'vital'
-  match '/tasks', to: 'patient#tasks', via: 'get'
+  match '/:patientid/chart', to: 'patient#chart', via: ['get', 'post'], as: 'chart'
+  match '/:patientid/editpatient', to: 'patient#editpatient', via: ['get', 'post'], as: 'editpatient'
+  match '/:patientid/vitalsOverview', to: 'patient#vitalsOverview', via: ['get', 'post'], as: 'vitalsOverview'
+  match '/:patientid/vital/:vitalid', to: 'patient#vital', via: ['get', 'post'], as: 'vital'
+  match '/:patientid/tasks', to: 'patient#tasks', via: ['get', 'post'], as: 'tasks'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

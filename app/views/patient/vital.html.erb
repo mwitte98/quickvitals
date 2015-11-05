@@ -1,7 +1,7 @@
-<% provide(:title, "Vital #{@vitalID}") %>
+<% provide(:title, "#{@patientName} #{@vitalName}") %>
 <body>
 	<div class="container">
-		<h1>Vital <%= @vitalID %></h1>
+		<h1><%= @patientName + " " + @vitalName %></h1>
 		<p>Insert detailed graph here</p>
 		<table>
 			<tr>
@@ -26,6 +26,6 @@
 			</tr>
 		</table>
 		<br>
-		<%= link_to "Add measurement", vital_path(@vitalID), {class: "btn btn-md btn-primary"} %>
+		<%= link_to "Add measurement", vital_path(@patientID, @vitalID), {class: "btn btn-md btn-primary"} %>
 	</div>
 </body>

@@ -1,11 +1,11 @@
-<% provide(:title, 'Patient 1 Vitals') %>
+<% provide(:title, "#{@patientName} Vitals") %>
 <body>
 	<div class="container">
-		<h1>Patient 1 Vitals</h1>
-		<% @vitals.each do |vital| %>
-			<%= link_to vital_path(vital) do %>
-				<div class="well col-sm-4">
-					<h4>Vital <%= vital %></h4>
+		<h1><%= @patientName %> Vitals</h1>
+		<% @vitals.each do |id, name| %>
+			<%= link_to vital_path(@patientID, id) do %>
+				<div class="well col-sm-6">
+					<h4><%= name %></h4>
 					<p>Insert graph here</p>
 				</div>
 			<% end %>

@@ -1,13 +1,56 @@
-<% provide(:title, 'Patient 1 Chart') %>
+<% provide(:title, "#{@patientName} Chart") %>
 <body>
 	<div class="container">
-		<h1>Patient 1 Chart</h1>
-		<%= link_to "Edit Patient 1 Profile", editpatient_path %>
-		<br>
-		<%= link_to "Patient 1 Vitals", vitalsOverview_path %>
-		<br>
-		<%= link_to "Patient 1 Completed Tasks", tasks_path %>
-		<br>
+		<h1><%= @patientName %> Chart</h1>
+		<p><%= link_to "Edit #{@patientName} Profile", editpatient_path, {class: "btn btn-md btn-primary"} %></p>
+		<p><%= link_to "#{@patientName} Vitals", vitalsOverview_path, {class: "btn btn-md btn-primary"} %></p>
+		
+		<h2>Medications</h2>
+		<ul>
+			<% if @patient[:medications].size == 0 %>
+				<li>None</li>
+			<% else %>
+				<% @patient[:medications].each do |med| %>
+					<li><%= med %></li>
+				<% end %>
+			<% end %>
+		</ul>
+		
+		<h2>Symptoms</h2>
+		<ul>
+			<% if @patient[:symptoms].size == 0 %>
+				<li>None</li>
+			<% else %>
+				<% @patient[:symptoms].each do |symptom| %>
+					<li><%= symptom %></li>
+				<% end %>
+			<% end %>
+		</ul>
+		
+		<h2>Allergies</h2>
+		<ul>
+			<% if @patient[:allergies].size == 0 %>
+				<li>None</li>
+			<% else %>
+				<% @patient[:allergies].each do |allergy| %>
+					<li><%= allergy %></li>
+				<% end %>
+			<% end %>
+		</ul>
+		
+		<p><%= link_to "#{@patientName} Completed Tasks", tasks_path %></p>
+		
+		<h2>Tasks To Complete</h2>
+		<ul>
+			<% if @patient[:tasksToComplete].size == 0 %>
+				<li>None</li>
+			<% else %>
+				<% @patient[:tasksToComplete].each do |task| %>
+					<li><%= task %></li>
+				<% end %>
+			<% end %>
+		</ul>
+		
 		<br>
 		<button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#addTaskModal">Add Task</button>
 		

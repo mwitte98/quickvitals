@@ -1,9 +1,17 @@
-<% provide(:title, 'Edit Patient 1 Profile') %>
+<% provide(:title, "Edit #{@patientName} Profile") %>
 <body>
 	<div class="container">
-		<h1>Edit Patient 1 Profile</h1>
-		<p>Name:</p>
-		<p>Address:</p>
+		<h1>Edit <%= @patientName %> Profile</h1>
+		<p>First Name: <%= @patient[:firstName] %></p>
+		<p>Last Name: <%= @patient[:lastName] %></p>
+		<p>Gender: <%= @patient[:gender] %></p>
+        <p>Date of Birth: <%= @patient[:dob] %></p>
+        <p>Height: <%= @patient[:height] %> inches</p>
+        <p>Weight: <%= @patient[:weight] %> pounds</p>
+        <p>Email: <%= @patient[:email] %></p>
+        <p>Phone Number: <%= @patient[:phoneNumber] %></p>
+        <p>Address: <%= @patient[:address] %></p>
+		<p><%= @patient[:city] %>, <%= @patient[:state] %> <%= @patient[:zip] %></p>
 		<%= link_to "Save", {controller: :patient, action: "chart"}, {class: "btn btn-md btn-primary"} %>
 	</div>
 </body>
