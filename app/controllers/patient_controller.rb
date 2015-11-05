@@ -39,13 +39,6 @@ class PatientController < ApplicationController
 
     add_breadcrumb "#{@patientName} Chart", chart_path(@patientID)
     add_breadcrumb "#{@patientName} Vitals", vitalsOverview_path(@patientID)
-
-    @vitals = [
-      {:name => "Heart Rate", :id => 1},
-      {:name => "Blood Pressure", :id => 2},
-      {:name => "Respiration Rate", :id => 3},
-      {:name => "Temperature", :id => 4}
-    ]
   end
 
   def vital
@@ -53,6 +46,9 @@ class PatientController < ApplicationController
     @patientName = @patients[@patientID][:firstName] + " " + @patients[@patientID][:lastName]
     @vitalID = params[:vitalid]
     @vitalName = @vitals[@vitalID]
+    @patientVital = @patients[@patientID][:vitals][@vitalID]
+    @formattedData = @patientVital.map {|vital| {:date => vital[:time].to_i, :value => vital[:value]}}.to_json
+
     add_breadcrumb "Search", search_path
     add_breadcrumb "#{@patientName} Chart", chart_path(@patientID)
     add_breadcrumb "#{@patientName} Vitals", vitalsOverview_path(@patientID)
@@ -69,6 +65,21 @@ class PatientController < ApplicationController
   end
 
   def set_variables
+    now = Time.new
+    defaultMeasurements = {
+      "1" => [],
+      "2" => [],
+      "3" => [],
+      "4" => []
+    }
+
+    (0..7).each do |i|
+      defaultMeasurements["1"] << {:time => now - ((7 - i)*24*60*60), :value => 98.6}
+      defaultMeasurements["2"] << {:time => now - ((7 - i)*24*60*60), :value => 66}
+      defaultMeasurements["3"] << {:time => now - ((7 - i)*24*60*60), :value => 17}
+      defaultMeasurements["4"] << {:time => now - ((7 - i)*24*60*60), :value => "120/80"}
+    end
+
     @vitals = {
       "1" => "Body Temperature",
       "2" => "Heart Rate",
@@ -77,8 +88,8 @@ class PatientController < ApplicationController
     }
     @patients = {
       "1" => {
-        firstName: "Patient",
-        lastName: "1",
+        firstName: "John",
+        lastName: "Cena",
         gender: "Male",
         dob: "1/1/1980",
         height: "65",
@@ -96,11 +107,12 @@ class PatientController < ApplicationController
         tasksCompleted: {
           "Give massage" => "10/10/2015 10:00am",
           "Take Heart Rate" => "10/10/2015 9:45am"
-        }
+        },
+        vitals: defaultMeasurements
       },
       "2" => {
-        firstName: "Patient",
-        lastName: "2",
+        firstName: "John",
+        lastName: "Doe",
         gender: "Male",
         dob: "1/1/1980",
         height: "65",
@@ -118,12 +130,13 @@ class PatientController < ApplicationController
         tasksCompleted: {
           "Give massage" => "10/10/2015 10:00am",
           "Take Heart Rate" => "10/10/2015 9:45am"
-        }
+        },
+        vitals: defaultMeasurements
       },
       "3" => {
-        firstName: "Patient",
-        lastName: "3",
-        gender: "Male",
+        firstName: "Jane",
+        lastName: "Doe",
+        gender: "Female",
         dob: "1/1/1980",
         height: "65",
         weight: "175",
@@ -140,11 +153,12 @@ class PatientController < ApplicationController
         tasksCompleted: {
           "Give massage" => "10/10/2015 10:00am",
           "Take Heart Rate" => "10/10/2015 9:45am"
-        }
+        },
+        vitals: defaultMeasurements
       },
       "4" => {
-        firstName: "Patient",
-        lastName: "4",
+        firstName: "Brian",
+        lastName: "Cranston",
         gender: "Male",
         dob: "1/1/1980",
         height: "65",
@@ -162,8 +176,9 @@ class PatientController < ApplicationController
         tasksCompleted: {
           "Give massage" => "10/10/2015 10:00am",
           "Take Heart Rate" => "10/10/2015 9:45am"
-        }
         },
+        vitals: defaultMeasurements
+      },
       "5" => {
         firstName: "Patient",
         lastName: "5",
@@ -184,7 +199,8 @@ class PatientController < ApplicationController
         tasksCompleted: {
           "Give massage" => "10/10/2015 10:00am",
           "Take Heart Rate" => "10/10/2015 9:45am"
-        }
+        },
+        vitals: defaultMeasurements
       },
       "6" => {
         firstName: "Patient",
@@ -206,7 +222,8 @@ class PatientController < ApplicationController
         tasksCompleted: {
           "Give massage" => "10/10/2015 10:00am",
           "Take Heart Rate" => "10/10/2015 9:45am"
-        }
+        },
+        vitals: defaultMeasurements
       }
     }
   end

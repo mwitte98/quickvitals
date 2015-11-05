@@ -3,7 +3,7 @@
 	<div class="container">
 		<h1><%= @vitalName %></h1>
 		<svg id="vitalChart"></svg>
-		<table>
+		<table class="table">
 			<thead>
 				<tr>
 					<th>Date</th>
@@ -11,23 +11,41 @@
 					<th>Value</th>
 				</tr>
 			</thead>
-			<tr>
-				<td>Date1</td>
-				<td>Time1</td>
-				<td>Value1</td>
-			</tr>
-			<tr>
-				<td>Date2</td>
-				<td>Time2</td>
-				<td>Value2</td>
-			</tr>
-			<tr>
-				<td>Date3</td>
-				<td>Time3</td>
-				<td>Value3</td>
-			</tr>
+			<tbody>
+					<% @patientVital.each do |vitalSign| %>
+						<tr>
+							<td>
+								<%= "#{vitalSign[:time].strftime('%b %d')}" %>
+							</td>
+							<td>
+								<%= "#{vitalSign[:time].strftime('%I:%M%p')}" %>
+							</td>
+							<td>
+								<%= "#{vitalSign[:value]}" %>
+							</td>
+						</tr>
+					<% end %>
+			</tbody>
 		</table>
 		<br>
 		<%= link_to "Add measurement", vital_path(@patientID, @vitalID), {class: "btn btn-md btn-primary"} %>
 	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var vitalData = JSON.parse(<%= raw @formattedData.to_json %>);
+
+			var width = $('.container').width();
+			var height = 750;
+
+			var x = d3.time.scale().range([0, width]);
+			var y = d3.scale.linear().range([height, 0]);
+
+			var xAxis = d3.svg.axis().scale(x).orient('bottom');
+			var yAxis = d3.svg.axis().scale(y).orient('left');
+
+			var vitalLine = d3.svg.line()
+				.x(function(d) { return x(d.date); })
+				.y(function(d) { return y(d.value); });
+		});
+	</script>
 </body>
