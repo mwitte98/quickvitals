@@ -3,7 +3,28 @@
 	<div class="container">
 		<h1><%= @vitalName %></h1>
 		<div id="vitalChart"></div>
-		<%= link_to "Add measurement", vital_path(@patientID, @vitalID), {class: "btn btn-md btn-primary"} %>
+		<form class="form-inline" id="new-measurement-form">
+		  <div class="form-group">
+				<% if @vitalName == "Blood Pressure" %>
+				<div class="input-group">
+		      <div class="input-group-addon">Systolic</div>
+		      <input type="number" class="form-control" id="systolic" placeholder="Value">
+		      <div class="input-group-addon"><%= @units %></div>
+		    </div>
+				<div class="input-group">
+		      <div class="input-group-addon">Diastolic</div>
+		      <input type="number" class="form-control" id="diastolic" placeholder="Value">
+		      <div class="input-group-addon"><%= @units %></div>
+		    </div>
+		    <% else %>
+				<div class="input-group">
+		      <input type="number" class="form-control" id="vitalValue" placeholder="Value">
+		      <div class="input-group-addon"><%= @units %></div>
+		    </div>
+				<% end %>
+		  </div>
+		  <button type="submit" class="btn btn-primary">Add Measurement</button>
+		</form>
 		<table class="table">
 			<thead>
 				<tr>
@@ -67,6 +88,10 @@
 						}
 					}
 				}
+			});
+
+			$('#new-measurement-form').submit(function(event) {
+				event.preventDefault();
 			});
 		});
 	</script>
