@@ -47,7 +47,7 @@ class PatientController < ApplicationController
     @vitalID = params[:vitalid]
     @vitalName = @vitals[@vitalID]
     @patientVital = @patients[@patientID][:vitals][@vitalID]
-    @formattedData = @patientVital.map {|vital| {:date => vital[:time].to_i, :value => vital[:value]}}.to_json
+    @formattedData = @patientVital.map {|vital| {:date => vital[:time].iso8601, :value => vital[:value]}}.to_json
 
     add_breadcrumb "Search", search_path
     add_breadcrumb "#{@patientName} Chart", chart_path(@patientID)
@@ -73,11 +73,25 @@ class PatientController < ApplicationController
       "4" => []
     }
 
-    (0..7).each do |i|
-      defaultMeasurements["1"] << {:time => now - ((7 - i)*24*60*60), :value => 98.6}
-      defaultMeasurements["2"] << {:time => now - ((7 - i)*24*60*60), :value => 66}
-      defaultMeasurements["3"] << {:time => now - ((7 - i)*24*60*60), :value => 17}
-      defaultMeasurements["4"] << {:time => now - ((7 - i)*24*60*60), :value => "120/80"}
+    (1..24).each do |i|
+      hourOffset = 24 - i
+
+      defaultMeasurements["1"] << {
+        :time => now - (hourOffset * 60 * 60),
+        :value => 98.6
+      }
+      defaultMeasurements["2"] << {
+        :time => now - (hourOffset * 60 * 60),
+        :value => 66
+      }
+      defaultMeasurements["3"] << {
+        :time => now - (hourOffset * 60 * 60),
+        :value => 17
+      }
+      defaultMeasurements["4"] << {
+        :time => now - (hourOffset * 60 * 60),
+        :value => "120/80"
+      }
     end
 
     @vitals = {

@@ -2,7 +2,7 @@
 <body>
 	<div class="container">
 		<h1><%= @vitalName %></h1>
-		<svg id="vitalChart"></svg>
+		<div id="vitalChart"></div>
 		<table class="table">
 			<thead>
 				<tr>
@@ -33,19 +33,30 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			var vitalData = JSON.parse(<%= raw @formattedData.to_json %>);
+			var format = d3.time.format('%I:%M%p');
 
-			var width = $('.container').width();
-			var height = 750;
-
-			var x = d3.time.scale().range([0, width]);
-			var y = d3.scale.linear().range([height, 0]);
-
-			var xAxis = d3.svg.axis().scale(x).orient('bottom');
-			var yAxis = d3.svg.axis().scale(y).orient('left');
-
-			var vitalLine = d3.svg.line()
-				.x(function(d) { return x(d.date); })
-				.y(function(d) { return y(d.value); });
+			var chart = c3.generate({
+		    bindto: '#vitalChart',
+		    data: {
+					x: 'x',
+		      columns: [
+						['x'].concat(_.map(vitalData, function(d) { return new Date(d.date); })),
+		        ["<%= @vitalName  %>"].concat(_.pluck(vitalData, 'value'))
+		      ]
+		    },
+				axis: {
+					x: {
+						label: 'Time',
+						type: 'timeseries',
+						tick: {
+							format: '%I:%M%p'
+						}
+					},
+					y: {
+						label: "<%= @vitalName  %>"
+					}
+				}
+			});
 		});
 	</script>
 </body>

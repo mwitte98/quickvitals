@@ -15,4 +15,6 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require d3
+//= require c3
+//= require lodash
 //= require_tree .
