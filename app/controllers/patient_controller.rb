@@ -85,7 +85,7 @@ class PatientController < ApplicationController
       "4" => []
     }
 
-    (0..12).each do |i|
+    (0...12).each do |i|
       hourOffset = 12 - i
 
       defaultMeasurements["1"] << {
