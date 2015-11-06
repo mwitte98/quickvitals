@@ -46,6 +46,17 @@ class PatientController < ApplicationController
     @patientName = @patients[@patientID][:firstName] + " " + @patients[@patientID][:lastName]
     @vitalID = params[:vitalid]
     @vitalName = @vitals[@vitalID][:name]
+    @vitalRange = @vitals[@vitalID][:healthyRange]
+    @inHealthyRange = Proc.new { |id, value|
+      if id == '4' then
+        sys = value[:systolic]
+        dias = value[:diastolic]
+        ((@vitalRange[:systolic][0]..@vitalRange[:systolic][1]).include?(sys)) or
+          ((@vitalRange[:diastolic][0]..@vitalRange[:diastolic][1]).include?(dias))
+      else
+        value >= @vitalRange[0] and value <= @vitalRange[1]
+      end
+    }
     @units = @vitals[@vitalID][:units]
     @patientVital = @patients[@patientID][:vitals][@vitalID]
     @formattedData = @patientVital.map {|vital| {:date => vital[:time].iso8601, :value => vital[:value]}}.to_json
@@ -74,32 +85,54 @@ class PatientController < ApplicationController
       "4" => []
     }
 
-    (1..24).each do |i|
-      hourOffset = 24 - i
+    (0..12).each do |i|
+      hourOffset = 12 - i
 
       defaultMeasurements["1"] << {
         :time => now - (hourOffset * 60 * 60),
-        :value => 98.6
+        :value => 97.6 + rand(3)
       }
       defaultMeasurements["2"] << {
         :time => now - (hourOffset * 60 * 60),
-        :value => 66
+        :value => 50 + rand(60)
       }
       defaultMeasurements["3"] << {
         :time => now - (hourOffset * 60 * 60),
-        :value => 17
+        :value => 12 + rand(7)
       }
       defaultMeasurements["4"] << {
         :time => now - (hourOffset * 60 * 60),
-        :value => {:systolic => 120, :diastolic => 80}
+        :value => {
+          :systolic => 90 + rand(50),
+          :diastolic => 60 + rand(30)
+        }
       }
     end
 
     @vitals = {
-      "1" => {:name => "Body Temperature", :units => "F"},
-      "2" => {:name => "Heart Rate", :units => "Beats/Min"},
-      "3" => {:name => "Respiratory Rate", :units => "Breaths/Min"},
-      "4" => {:name => "Blood Pressure", :units => "mm Hg"}
+      "1" => {
+        :name => "Body Temperature",
+        :units => "F",
+        :healthyRange => [97.6, 99.6]
+      },
+      "2" => {
+        :name => "Heart Rate",
+        :units => "Beats/Min",
+        :healthyRange => [60, 100]
+      },
+      "3" => {
+        :name => "Respiratory Rate",
+        :units => "Breaths/Min",
+        :healthyRange => [12, 16]
+      },
+      "4" => {
+        :name => "Blood Pressure",
+        :units => "mm Hg",
+        :healthyRange => {
+          :systolic => [90, 120],
+          :diastolic => [60, 80]
+        }
+      }
     }
     @patients = {
       "1" => {
