@@ -45,7 +45,8 @@ class PatientController < ApplicationController
     @patientID = params[:patientid]
     @patientName = @patients[@patientID][:firstName] + " " + @patients[@patientID][:lastName]
     @vitalID = params[:vitalid]
-    @vitalName = @vitals[@vitalID]
+    @vitalName = @vitals[@vitalID][:name]
+    @units = @vitals[@vitalID][:units]
     @patientVital = @patients[@patientID][:vitals][@vitalID]
     @formattedData = @patientVital.map {|vital| {:date => vital[:time].iso8601, :value => vital[:value]}}.to_json
 
@@ -90,15 +91,15 @@ class PatientController < ApplicationController
       }
       defaultMeasurements["4"] << {
         :time => now - (hourOffset * 60 * 60),
-        :value => "120/80"
+        :value => {:systolic => 120, :diastolic => 80}
       }
     end
 
     @vitals = {
-      "1" => "Body Temperature",
-      "2" => "Heart Rate",
-      "3" => "Respiratory Rate",
-      "4" => "Blood Pressure"
+      "1" => {:name => "Body Temperature", :units => "F"},
+      "2" => {:name => "Heart Rate", :units => "Beats/Min"},
+      "3" => {:name => "Respiratory Rate", :units => "Breaths/Min"},
+      "4" => {:name => "Blood Pressure", :units => "mm Hg"}
     }
     @patients = {
       "1" => {

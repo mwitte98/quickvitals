@@ -3,6 +3,7 @@
 	<div class="container">
 		<h1><%= @vitalName %></h1>
 		<div id="vitalChart"></div>
+		<%= link_to "Add measurement", vital_path(@patientID, @vitalID), {class: "btn btn-md btn-primary"} %>
 		<table class="table">
 			<thead>
 				<tr>
@@ -21,19 +22,21 @@
 								<%= "#{vitalSign[:time].strftime('%I:%M%p')}" %>
 							</td>
 							<td>
-								<%= "#{vitalSign[:value]}" %>
+								<% if @vitalName == "Blood Pressure" %>
+									<%= "#{vitalSign[:value][:systolic]}" %>/<%= "#{vitalSign[:value][:diastolic]}" %>
+								<% else %>
+									<%= "#{vitalSign[:value]}" %>
+								<% end %>
 							</td>
 						</tr>
 					<% end %>
 			</tbody>
 		</table>
 		<br>
-		<%= link_to "Add measurement", vital_path(@patientID, @vitalID), {class: "btn btn-md btn-primary"} %>
 	</div>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			var vitalData = JSON.parse(<%= raw @formattedData.to_json %>);
-			var format = d3.time.format('%I:%M%p');
 
 			var chart = c3.generate({
 		    bindto: '#vitalChart',
@@ -41,7 +44,12 @@
 					x: 'x',
 		      columns: [
 						['x'].concat(_.map(vitalData, function(d) { return new Date(d.date); })),
-		        ["<%= @vitalName  %>"].concat(_.pluck(vitalData, 'value'))
+						<% if @vitalName == "Blood Pressure" %>
+							['Systolic Pressure'].concat(_.pluck(vitalData, 'value.systolic')),
+							['Diastolic Pressure'].concat(_.pluck(vitalData, 'value.diastolic')),
+						<% else %>
+							["<%= @vitalName  %> (<%= @units %>)"].concat(_.pluck(vitalData, 'value'))
+						<% end %>
 		      ]
 		    },
 				axis: {
@@ -49,11 +57,14 @@
 						label: 'Time',
 						type: 'timeseries',
 						tick: {
-							format: '%I:%M%p'
+							format: '%b %d %I:%M%p'
 						}
 					},
 					y: {
-						label: "<%= @vitalName  %>"
+						label: {
+							text: "<%= @vitalName  %> (<%= @units %>)",
+							position: "outer-middle"
+						}
 					}
 				}
 			});

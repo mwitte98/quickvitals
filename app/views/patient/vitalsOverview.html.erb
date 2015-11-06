@@ -2,10 +2,10 @@
 <body>
 	<div class="container">
 		<h1><%= @patientName %> Vitals</h1>
-		<% @vitals.each do |id, name| %>
+		<% @vitals.each do |id, vital| %>
 			<%= link_to vital_path(@patientID, id) do %>
 				<div class="well col-sm-6">
-					<h4><%= name %></h4>
+					<h4><%= vital[:name] %></h4>
 					<svg id="vital-<%= id %>-<%= @patientID %>"></svg>
 				</div>
 			<% end %>
