@@ -35,8 +35,10 @@ class PatientController < ApplicationController
   def vitalsOverview
     @patientID = params[:patientid]
     @patientName = @patients[@patientID][:firstName] + " " + @patients[@patientID][:lastName]
-    add_breadcrumb "Search", search_path
+    @patientVitals = @patients[@patientID][:vitals]
+    @vitalTypes = @vitals
 
+    add_breadcrumb "Search", search_path
     add_breadcrumb "#{@patientName} Chart", chart_path(@patientID)
     add_breadcrumb "#{@patientName} Vitals", vitalsOverview_path(@patientID)
   end
@@ -59,7 +61,6 @@ class PatientController < ApplicationController
     }
     @units = @vitals[@vitalID][:units]
     @patientVital = @patients[@patientID][:vitals][@vitalID]
-    @formattedData = @patientVital.map {|vital| {:date => vital[:time].iso8601, :value => vital[:value]}}.to_json
 
     add_breadcrumb "Search", search_path
     add_breadcrumb "#{@patientName} Chart", chart_path(@patientID)

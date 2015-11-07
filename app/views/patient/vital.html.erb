@@ -59,14 +59,14 @@
 	</div>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			var vitalData = JSON.parse(<%= raw @formattedData.to_json %>);
+			var vitalData = <%= raw @patientVital.to_json %>
 
 			var chart = c3.generate({
 		    bindto: '#vitalChart',
 		    data: {
 					x: 'x',
 		      columns: [
-						['x'].concat(_.map(vitalData, function(d) { return new Date(d.date); })),
+						['x'].concat(_.map(vitalData, function(d) { return new Date(d.time); })),
 						<% if @vitalName == "Blood Pressure" %>
 							['Systolic Pressure (<%= @units %>)'].concat(_.pluck(vitalData, 'value.systolic')),
 							['Diastolic Pressure (<%= @units %>)'].concat(_.pluck(vitalData, 'value.diastolic')),
