@@ -7,11 +7,15 @@
 		</div>
 		<div style="float:left; width:80%">
 			<% @patients.each do |id, patient| %>
-				<div style="width:100%" class="well" >
-				<p><%= link_to "#{patient[:firstName]} #{patient[:lastName]}", chart_path(id) %></p>
-				<p><%= patient[:gender] %></p>
-				<p><%= patient[:dob] %></p>
-				<br>
+				<div style="width:100%; height:150px" class="well" >
+					<!-- TODO: get picture from patient object, rather than external url -->
+					<!-- TODO: get card to fit to contents -->
+					<img src="http://www.cagealotcastle.com/avatar?id=1522930&m=73&t=1375359483" height="100px" width="100px" style="float:left"></img>
+					<div style="float:left; width:80%" >
+						<p><%= link_to "#{patient[:firstName]} #{patient[:lastName]}", chart_path(id) %></p>
+						<p><%= patient[:gender] %></p>
+						<p><%= patient[:dob] %></p>
+					</div>
 				</div>
 			<% end %>
 		</div>
