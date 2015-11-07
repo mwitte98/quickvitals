@@ -2,11 +2,18 @@
 <body>
 	<div class="container">
 		<h1>Search</h1>
-		<% @patients.each do |id, patient| %>
-			<p><%= link_to "#{patient[:firstName]} #{patient[:lastName]}", chart_path(id) %></p>
-			<p><%= patient[:gender] %></p>
-			<p><%= patient[:dob] %></p>
-			<br>
-		<% end %>
+		<div style="float:left; width:20%">
+			This is some placeholder text. The search input form will go here. Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
+		</div>
+		<div style="float:left; width:80%">
+			<% @patients.each do |id, patient| %>
+				<div style="padding=10px 10px 10px 10px; border:5px solid black; width=100%">
+				<p><%= link_to "#{patient[:firstName]} #{patient[:lastName]}", chart_path(id) %></p>
+				<p><%= patient[:gender] %></p>
+				<p><%= patient[:dob] %></p>
+				<br>
+				</div>
+			<% end %>
+		</div>
 	</div>
 </body>
