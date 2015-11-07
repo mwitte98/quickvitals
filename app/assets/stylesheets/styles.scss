@@ -16,6 +16,8 @@ body {
 }
 
 .well {
+  margin: 15px;
+  width: 45%;
   background-color: #CFE2F3;
 }
 
@@ -29,6 +31,10 @@ body {
   background-color: #38761d;
 }
 
+.btn-default {
+  background-color: #CCCCCC;
+}
+
 .modal-content {
   background-color: #CFE2F3;
 }
@@ -37,3 +43,13 @@ tr.danger td {
   color: white;
   background-color: #C25B56 !important;
 }
+
+#vitalChart {
+  background-color: #CFE2F3;
+  margin-bottom: 15px;
+}
+
+#new-measurement-form .form-group div {
+  margin-bottom: 15px;
+}
+
