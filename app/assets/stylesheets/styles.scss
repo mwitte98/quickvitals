@@ -5,6 +5,14 @@ body {
 .breadcrumb {
   background-color: #0B5394;
   border-radius: 0px;
+
+  li {
+    color: white;
+
+    a {
+      color: #CFE2F3;
+    }
+  }
 }
 
 .well {
@@ -23,4 +31,9 @@ body {
 
 .modal-content {
   background-color: #CFE2F3;
+}
+
+tr.danger td {
+  color: white;
+  background-color: #C25B56 !important;
 }
