@@ -7,7 +7,7 @@
 		</div>
 		<div style="float:left; width:80%">
 			<% @patients.each do |id, patient| %>
-				<div style="padding=10px 10px 10px 10px; border:5px solid black; width=100%">
+				<div style="width:100%" class="well" >
 				<p><%= link_to "#{patient[:firstName]} #{patient[:lastName]}", chart_path(id) %></p>
 				<p><%= patient[:gender] %></p>
 				<p><%= patient[:dob] %></p>
