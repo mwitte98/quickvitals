@@ -1,31 +1,161 @@
 <% provide(:title, "#{@patientName} #{@vitalName}") %>
 <body>
 	<div class="container">
-		<h1><%= @patientName + " " + @vitalName %></h1>
-		<p>Insert detailed graph here</p>
-		<table>
-			<tr>
-				<th>Date</th>
-				<th>Time</th>
-				<th>Value</th>
-			</tr>
-			<tr>
-				<td>Date1</td>
-				<td>Time1</td>
-				<td>Value1</td>
-			</tr>
-			<tr>
-				<td>Date2</td>
-				<td>Time2</td>
-				<td>Value2</td>
-			</tr>
-			<tr>
-				<td>Date3</td>
-				<td>Time3</td>
-				<td>Value3</td>
-			</tr>
-		</table>
-		<br>
-		<%= link_to "Add measurement", vital_path(@patientID, @vitalID), {class: "btn btn-md btn-primary"} %>
+		<h1><%= @vitalName %></h1>
+		<div id="vitalChart"></div>
+		<form class="form-inline" id="new-measurement-form">
+		  <div class="form-group">
+				<% if @vitalName == "Blood Pressure" %>
+				<div class="input-group">
+		      <div class="input-group-addon">Systolic</div>
+		      <input type="number" class="form-control" id="systolic" placeholder="Value">
+		      <div class="input-group-addon"><%= @units %></div>
+		    </div>
+				<div class="input-group">
+		      <div class="input-group-addon">Diastolic</div>
+		      <input type="number" class="form-control" id="diastolic" placeholder="Value">
+		      <div class="input-group-addon"><%= @units %></div>
+		    </div>
+		    <% else %>
+				<div class="input-group">
+		      <input type="number"
+						class="form-control"
+						id="vitalValue"
+						placeholder="Value"
+						step="any">
+		      <div class="input-group-addon"><%= @units %></div>
+		    </div>
+				<% end %>
+		  </div>
+		  <button type="submit" class="btn btn-primary">Add Measurement</button>
+		</form>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Date</th>
+					<th>Time</th>
+					<th>Value</th>
+				</tr>
+			</thead>
+			<tbody>
+					<% @patientVital.each do |vitalSign| %>
+						<tr class="<%= 'danger' if !@inHealthyRange.call(@vitalID, vitalSign[:value]) %>">
+							<td>
+								<%= "#{vitalSign[:time].strftime('%b %d')}" %>
+							</td>
+							<td>
+								<%= "#{vitalSign[:time].strftime('%I:%M%p')}" %>
+							</td>
+							<td>
+								<% if @vitalName == "Blood Pressure" %>
+									<%= "#{vitalSign[:value][:systolic]}" %>/<%= "#{vitalSign[:value][:diastolic]} #{@units}" %>
+								<% else %>
+									<%= "#{vitalSign[:value]} #{@units}" %>
+								<% end %>
+							</td>
+						</tr>
+					<% end %>
+			</tbody>
 	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var vitalData = <%= raw @patientVital.to_json %>
+
+			var chart = c3.generate({
+		    bindto: '#vitalChart',
+		    data: {
+					x: 'x',
+		      columns: [
+						['x'].concat(_.map(vitalData, function(d) { return new Date(d.time); })),
+						<% if @vitalName == "Blood Pressure" %>
+							['Systolic Pressure (<%= @units %>)'].concat(_.pluck(vitalData, 'value.systolic')),
+							['Diastolic Pressure (<%= @units %>)'].concat(_.pluck(vitalData, 'value.diastolic')),
+						<% else %>
+							['<%= @vitalName  %> (<%= @units %>)'].concat(_.pluck(vitalData, 'value'))
+						<% end %>
+		      ]
+		    },
+				axis: {
+					x: {
+						label: 'Time',
+						type: 'timeseries',
+						tick: {
+							format: '%I %p'
+						}
+					},
+					y: {
+						label: {
+							text: "<%= @vitalName  %> (<%= @units %>)",
+							position: "outer-middle"
+						}
+					}
+				}
+			});
+
+			$('#new-measurement-form').submit(function(event) {
+				event.preventDefault();
+
+				var isInRange = function() {
+					<% if @vitalName == "Blood Pressure" %>
+						var systolic = arguments[0],
+							diastolic = arguments[1];
+
+						var sysInRange = systolic >= <%= @vitalRange[:systolic][0] %> &&
+							systolic <= <%= @vitalRange[:systolic][1] %>;
+						var diasInRange = diastolic >= <%= @vitalRange[:diastolic][0] %> &&
+							diastolic <= <%= @vitalRange[:diastolic][1] %>;
+
+						return sysInRange && diasInRange;
+					<% else %>
+						var value = arguments[0];
+						return value >= <%= @vitalRange[0] %> && value <= <%= @vitalRange[1] %>;
+					<% end %>
+				};
+
+				var dateFormat = d3.time.format('%b %d'),
+					dayFormat = d3.time.format('%I:%M%p');
+				var now = new Date();
+				var valueToInsert, isHealthyRange;
+
+				<% if @vitalName == "Blood Pressure" %>
+				var systolic = parseInt($('#systolic').val()),
+					diastolic = parseInt($('#diastolic').val());
+
+				valueToInsert = systolic + '/' + diastolic;
+				isHealthyRange = isInRange(systolic, diastolic);
+
+				chart.flow({
+					columns: [
+						['x', now],
+						['Systolic Pressure (<%= @units %>)', systolic],
+						['Diastolic Pressure (<%= @units %>)', diastolic],
+					]
+				});
+				<% else %>
+				var vitalValue = parseFloat($('#vitalValue').val());
+				valueToInsert = vitalValue;
+				isHealthyRange = isInRange(vitalValue);
+
+				chart.flow({
+					columns: [
+						['x', now],
+						['<%= @vitalName  %> (<%= @units %>)', vitalValue]
+					]
+				});
+				<% end %>
+
+				$('table tr:last').after(
+					'<tr>' +
+						'<td>' + dateFormat(now) + '</td>' +
+						'<td>' + dayFormat(now) + '</td>' +
+						'<td>' + valueToInsert + ' <%= @units %></td>' +
+					'</tr>'
+				);
+
+				if (!isHealthyRange) {
+					$('table tr:last').attr('class', 'danger');
+				}
+			});
+		});
+	</script>
 </body>

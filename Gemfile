@@ -12,6 +12,8 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'bcrypt', '~> 3.1.7'
 gem 'breadcrumbs_on_rails'
+gem 'lodash-rails'
+gem 'c3-rails'
 
 group :development, :test do
   gem 'sqlite3'
@@ -24,4 +26,3 @@ group :production do
   gem 'pg', '~> 0.18.3'
   gem 'rails_12factor', '0.0.3'
 end
-
