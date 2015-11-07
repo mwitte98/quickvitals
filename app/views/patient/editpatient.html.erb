@@ -1,17 +1,214 @@
-<% provide(:title, "Edit #{@patientName} Profile") %>
+<% provide(:title, 'Register Patient') %>
 <body>
 	<div class="container">
-		<h1>Edit <%= @patientName %> Profile</h1>
-		<p>First Name: <%= @patient[:firstName] %></p>
-		<p>Last Name: <%= @patient[:lastName] %></p>
-		<p>Gender: <%= @patient[:gender] %></p>
-        <p>Date of Birth: <%= @patient[:dob] %></p>
-        <p>Height: <%= @patient[:height] %> inches</p>
-        <p>Weight: <%= @patient[:weight] %> pounds</p>
-        <p>Email: <%= @patient[:email] %></p>
-        <p>Phone Number: <%= @patient[:phoneNumber] %></p>
-        <p>Address: <%= @patient[:address] %></p>
-		<p><%= @patient[:city] %>, <%= @patient[:state] %> <%= @patient[:zip] %></p>
-		<%= link_to "Save", {controller: :patient, action: "chart"}, {class: "btn btn-md btn-primary"} %>
+		<h1>Register Patient</h1>
+
+		<div class="col-sm-6">
+				<div class="row">
+					<div class="col-sm-3">
+						<p>Name</p>
+					</div>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" value=<%= @patient[:firstName] %>>
+					</div>
+				</div>
+
+				<div class="row" style="padding-top: 10px">
+					<div class="col-sm-3">
+						Gender
+					</div>
+
+					<div class="col-sm-9">
+						<input type="radio">Male
+						<input type="radio">Female
+					</div>
+
+				</div>
+
+				<div class="row" style="margin-top:10px">
+
+					<div class="col-sm-3">
+						<p>Date of Birth</p>
+					</div>
+					<div class="col-sm-3">
+							<select>
+								<option value="jan">January</option>
+								<option value="feb">February</option>
+								<option value="feb">March</option>
+								<option value="feb">April</option>
+								<option value="feb">May</option>
+								<option value="feb">June</option>
+								<option value="feb">July</option>
+								<option value="feb">August</option>
+								<option value="feb">September</option>
+								<option value="feb">October</option>
+								<option value="feb">November</option>
+								<option value="feb">December</option>
+							</select>
+					</div>
+					<div class="col-sm-2">
+						<select id="start_date_year" name="start_date[year]">
+							<% for i in 1..31 do %>
+								<option value="<%=i%>"><%=i%></option>
+							<% end %>
+						</select>
+					</div>
+					<div class="col-sm-4">
+						<select>
+							<option value="blank"> </option>
+							<% for i in 1900..2015 do %>
+								<option value="<%=i%>"><%=i%></option>
+							<% end %>
+						</select>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<p>Height</p>
+					</div>
+					<div class="col-sm-3">
+						<input type="number" style="width: 100px" value=<%= @patient[:height] %>>
+					</div>
+					<div class="col-sm-2">
+						<p>Weight</p>
+					</div>
+					<div class="col-sm-4">
+						<input type="number" style="width: 100px" value=<%= @patient[:weight] %>>
+					</div>
+				</div>
+
+				<div class="row" style="padding-top: 10px">
+					<div class="col-sm-3">
+						<p>E-mail Address</p>
+					</div>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" value=<%= @patient[:email] %>>
+					</div>
+				</div>
+
+				<div class="row" style="padding-top: 10px">
+					<div class="col-sm-3">
+						<p>Phone Number</p>
+					</div>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" value=<%= @patient[:phoneNumber] %>>
+					</div>
+				</div>
+
+				<div class="row" style="padding-top: 10px">
+					<div class="col-sm-3">
+						<p>Address</p>
+					</div>
+					<div class="col-sm-9">
+							<input type="text" class="form-control" value=<%= @patient[:address] %>>
+
+					</div>
+				</div>
+
+				<div class="row">
+
+					<div class="col-sm-3">
+					</div>
+					<div class="col-sm-9">
+							<div class="row" style="padding-top: 10px">
+								<div class="col-sm-2" style="padding-top: 5px">
+									<p>City</p>
+								</div>
+								<div class="col-sm-2" style="padding: 0px">
+									<input type="text" class="form-control" value=<%= @patient[:city] %>>
+								</div>
+								<div class="col-sm-2" style="padding-top: 5px">
+									<p>State </p>
+								</div>
+								<div class="col-sm-2" style="padding-left: 0px; padding-top: 5px">
+									<select>
+										<option value="feb">NY</option>
+										<option value="jan">AL</option>
+										<option value="feb">AK</option>
+										<option value="feb">AZ</option>
+										<option value="feb">AR</option>
+										<option value="feb">CA</option>
+										<option value="feb">CO</option>
+										<option value="feb">CT</option>
+										<option value="feb">DE</option>
+										<option value="feb">FL</option>
+										<option value="feb">GA</option>
+										<option value="feb">HI</option>
+										<option value="feb">ID</option>
+										<option value="feb">IL</option>
+										<option value="feb">IN</option>
+										<option value="feb">IA</option>
+										<option value="feb">KS</option>
+										<option value="feb">KY</option>										<option value="feb">LA</option>
+										<option value="feb">ME</option>
+										<option value="feb">MD</option>
+										<option value="feb">MA</option>
+										<option value="feb">MI</option>
+										<option value="feb">MN</option>
+										<option value="feb">MS</option>
+										<option value="feb">MO</option>
+										<option value="feb">MT</option>
+										<option value="feb">NE</option>										<option value="feb">NV</option>
+										<option value="feb">NH</option>
+										<option value="feb">NJ</option>
+										<option value="feb">NM</option>
+									</select>
+								</div>
+								<div class="col-sm-2" style="padding-top: 5px">
+									<p>Zip </p>
+								</div>
+								<div class="col-sm-2" style="padding-left: 0px">
+									<input type="text" class="form-control" value=<% @patient[:zip] %>>
+								</div>
+							</div>
+					</div>
+
+				</div>
+
+				<div class="row" style="padding-top: 10px">
+					<div class="col-sm-3" style>
+						<p>Medical History</p>
+					</div>
+					<div class="col-sm-9">
+						<textarea type="text" class="form-control" style="height: 50px"></textarea>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<p>Allergies</p>
+					</div>
+					<div class="col-sm-9">
+						Pollen <input type="checkbox">
+						Dust Mites <input type="checkbox">
+						Penicillin <input type="checkbox">
+						Cats/Dogs <input type="checkbox">
+						<div>
+							Other <input type="text">
+						</div>
+					</div>
+				</div>
+		</div>
+		<div class="col-sm-4">
+			<div class="row">
+				<img alt="Picture" height="300" width="300" class="pull-right">
+			</div>
+			<br>
+			<div class="row">
+				<%= link_to "Take Picture", {controller: :patient, action: "home"}, {class: "btn btn-md btn-primary pull-right"} %>
+			</div>
+			<br>
+			<br>
+			<br>
+			<br>
+			<div class="row">
+				<%= link_to "Save", {controller: :patient, action: "home"}, {class: "btn btn-md btn-primary pull-right"} %>
+				<%= link_to "Cancel", {controller: :patient, action: "home"}, {class: "btn btn-md btn-primary pull-right"} %>
+
+			</div>
+
+		</div>
+
 	</div>
 </body>
