@@ -2,12 +2,16 @@
 <body>
 	<div class="container">
 		<h1>Welcome to Quick Vitals!</h1>
-		<%= link_to "Register Patient", registerpatient_path %>
-		<br>
-		<%= link_to "Search", search_path %>
-		<br>
-		<%= link_to "Settings", '#' %>
-		<br>
-		<%= link_to "Hospital Map", '#' %>
+		<%= link_to registerpatient_path do %>
+			<div class="well btn btn-md btn-primary col-sm-6">
+				<h1 style="text-align: center;">Register Patient</h1>
+			</div>
+		<% end %>
+		
+		<%= link_to search_path do %>
+			<div class="well btn btn-md btn-primary col-sm-6">
+				<h1 style="text-align: center;">Search</h1>
+			</div>
+		<% end %>
 	</div>
 </body>
