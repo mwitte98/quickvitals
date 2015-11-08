@@ -5,6 +5,9 @@ body {
 .breadcrumb {
   background-color: #0B5394;
   border-radius: 0px;
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
 
   li {
     color: white;
@@ -51,4 +54,8 @@ tr.danger td {
 
 #new-measurement-form {
   margin-bottom: 15px;
+}
+
+.container {
+  padding-top: 50px;
 }
