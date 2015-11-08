@@ -1,12 +1,60 @@
 <% provide(:title, 'Search') %>
+<script>
+		function filter(){
+			var nameInput = document.getElementById('searchNameInput').value;
+			var genderInput = document.getElementById('searchGenderInput').value;
+			var dobInput = document.getElementById('searchDobInput').value;
+			var patients = document.getElementsByClassName('well');
+			var length = patients.length;
+			for(var i = 0; i < length; i++){
+				var matchesFilter = true;
+				var parentDiv = patients[i].getElementsByTagName("div")[0]
+				var patientName = parentDiv.getElementsByClassName('name')[0];
+				var nameText = patientName.textContent || patientName.innerText || '';
+				if(nameText.toLowerCase().indexOf(nameInput.toLowerCase()) == -1){
+					matchesFilter = false;
+				}
+				var patientGender = parentDiv.getElementsByClassName('gender')[0];
+				var genderText = patientGender.textContent || patientGender.innerText || '';
+				if(genderText.toLowerCase().indexOf(genderInput.toLowerCase()) == -1){
+					matchesFilter = false;
+				}
+				var patientDob = parentDiv.getElementsByClassName('dob')[0];
+				var dobText = patientDob.textContent || patientDob.innerText || '';
+				if(dobText.toLowerCase().indexOf(dobInput.toLowerCase()) == -1){
+					matchesFilter = false;
+				}
+				if(!matchesFilter){
+					patients[i].style.display = 'none';
+				} else {
+					patients[i].style.display = 'block';
+				}
+			}
+		}
+</script>
 <body>
 	<div class="container">
 		<h1>Search</h1>
-		<% @patients.each do |id, patient| %>
-			<p><%= link_to "#{patient[:firstName]} #{patient[:lastName]}", chart_path(id) %></p>
-			<p><%= patient[:gender] %></p>
-			<p><%= patient[:dob] %></p>
-			<br>
-		<% end %>
+		<div style="float:left; width:25%">
+			<form>
+				Name: <input type="text" id="searchNameInput" onkeyup="filter()" autofocus/><br>
+				Gender: <input type="text" id="searchGenderInput" onkeyup="filter()"/><br>
+				DOB: <input type="text" id="searchDobInput" onkeyup="filter()"/><br>
+			</form>
+		</div>
+		<div style="float:left; width:75%">
+			<% @patients.each do |id, patient| %>
+				<div style="width:100%; height:150px; display:block" class="well" >
+					<!-- TODO: get picture from patient object, rather than external url -->
+					<!-- TODO: get card to fit to contents -->
+					<img src="http://www.cagealotcastle.com/avatar?id=1522930&m=73&t=1375359483" height="100px" width="100px" style="float:left"></img>
+					<div style="float:left; width:80%" >
+						<p class="name"><%= link_to "#{patient[:firstName]} #{patient[:lastName]}", chart_path(id) %></p>
+						<p class="gender"><%= patient[:gender] %></p>
+						<p class="dob"><%= patient[:dob] %></p>
+					</div>
+				</div>
+			<% end %>
+		</div>
 	</div>
 </body>
