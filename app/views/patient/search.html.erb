@@ -2,7 +2,8 @@
 <script>
 		function filter(){
 			var nameInput = document.getElementById('searchNameInput').value;
-			var genderInput = document.getElementById('searchGenderInput').value;
+			var maleInput = document.getElementById('searchMaleInput').checked;
+			var femaleInput = document.getElementById('searchFemaleInput').checked;
 			var dobInput = document.getElementById('searchDobInput').value;
 			var patients = document.getElementsByClassName('well');
 			var length = patients.length;
@@ -16,7 +17,10 @@
 				}
 				var patientGender = parentDiv.getElementsByClassName('gender')[0];
 				var genderText = patientGender.textContent || patientGender.innerText || '';
-				if(genderText.toLowerCase().indexOf(genderInput.toLowerCase()) == -1){
+				if((maleInput && genderText.toLowerCase() == 'male') || 
+					(femaleInput && genderText.toLowerCase() == 'female')){
+					matchesFilter = true;
+				} else {
 					matchesFilter = false;
 				}
 				var patientDob = parentDiv.getElementsByClassName('dob')[0];
@@ -38,7 +42,8 @@
 		<div style="float:left; width:25%">
 			<form>
 				Name: <input type="text" id="searchNameInput" onkeyup="filter()" autofocus/><br>
-				Gender: <input type="text" id="searchGenderInput" onkeyup="filter()"/><br>
+				Male: <input type="checkbox" id="searchMaleInput" onclick="filter()" checked/>
+				Female: <input type="checkbox" id="searchFemaleInput" onclick="filter()" checked/><br>
 				DOB: <input type="text" id="searchDobInput" onkeyup="filter()"/><br>
 			</form>
 		</div>
