@@ -1,10 +1,12 @@
 <% provide(:title, "#{@patientName} Chart") %>
 <body>
 	<div class="container">
-		<h1><%= @patientName %> Chart</h1>
-		<p><%= link_to "Edit #{@patientName} Profile", editpatient_path, {class: "btn btn-md btn-primary"} %></p>
-		<p><%= link_to "#{@patientName} Vitals", vitalsOverview_path, {class: "btn btn-md btn-primary"} %></p>
-		
+	  <ul class="list-inline">
+      <li><h1><%= @patientName %>'s Chart</h1></li>
+      <li><p><%= link_to "Edit #{@patientName} Profile", editpatient_path, {class: "btn btn-md btn-primary"} %></p></li>
+      <li><p><%= link_to "#{@patientName} Vitals", vitalsOverview_path, {class: "btn btn-md btn-primary"} %></p></li>
+		</ul>
+
 		<div class="row">
 		<div class="col-md-8">
 
