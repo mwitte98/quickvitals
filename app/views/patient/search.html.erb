@@ -49,7 +49,7 @@
 		</div>
 		<div style="float:left; width:75%">
 			<% @patients.each do |id, patient| %>
-				<div style="width:100%; height:150px; display:block" class="well" >
+				<div style="width:100%; height:auto; display:block; overflow:auto" class="well" >
 					<!-- TODO: get picture from patient object, rather than external url -->
 					<!-- TODO: get card to fit to contents -->
 					<img src="http://www.cagealotcastle.com/avatar?id=1522930&m=73&t=1375359483" height="100px" width="100px" style="float:left"></img>
@@ -59,9 +59,13 @@
 						<p class="dob"><%= patient[:dob] %></p>
 					</div>
 					
-					<%= link_to "View Completed Tasks", tasks_path(id), {class: "btn btn-md btn-primary", style: "float:right; padding-top:30px; padding-bottom:30px; margin:10px"} %>
-					<%= link_to "View Vitals", vitalsOverview_path(id), {class: "btn btn-md btn-primary", style: "float:right; padding-top:30px; padding-bottom:30px; margin:10px"} %>
-					<%= link_to "View Chart", chart_path(id), {class: "btn btn-md btn-primary", style: "float:right; padding-top:30px; padding-bottom:30px; margin:10px"}%>
+					<%= link_to tasks_path(id) do %>
+					<div class="pull-right btn btn-md btn-primary", style="padding-top:30px;  padding-bottom:30px; margin:10px; word-wrap:break-word;">
+						View Completed Tasks
+					</div>
+					<%  end %>
+					<%= link_to "View Vitals", vitalsOverview_path(id), {class: "pull-right btn btn-md btn-primary", style: "padding-top:30px; padding-bottom:30px; margin:10px"} %>
+					<%= link_to "View Chart", chart_path(id), {class: "pull-right btn btn-md btn-primary", style: "padding-top:30px; padding-bottom:30px; margin:10px"}%>
 				</div>
 			<% end %>
 		</div>
