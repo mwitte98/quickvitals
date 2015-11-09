@@ -1,4 +1,19 @@
 <% provide(:title, "#{@patientName} Chart") %>
+<script>
+	function strikeThrough(){
+		var tasks = document.getElementsByClassName("input-group")
+		var length = tasks.length;
+		for(var i = 0; i < length; i++){
+			var val = tasks[i].getElementsByClassName("task-checkbox")[0].checked;
+			var span = tasks[i].getElementsByTagName("span")[0];
+			if(val){
+				span.style.textDecoration = "line-through";
+			} else {
+				span.style.textDecoration = "none";
+			}
+		}
+	}
+</script>
 <body>
 	<div class="container">
 	  <ul class="list-inline">
@@ -78,7 +93,7 @@
           <% @patient[:tasksToComplete].each do |task| %>
             <li class="list-group-item">
               <div class="input-group">
-                <input type="checkbox" class="task-checkbox">
+                <input type="checkbox" class="task-checkbox" onclick="strikeThrough()">
                 <span><%= task %></span>
               </div>
             </li>
