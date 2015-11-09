@@ -24,6 +24,19 @@ body {
   background-color: #CFE2F3;
 }
 
+.table {
+  background-color: #CFE2F3;
+}
+
+table, th, td {
+  border: 1px solid #0B5394 !important;
+}
+
+th {
+  background-color: #0B5394;
+  color: white;
+}
+
 .btn {
   margin-right: 15px;
 }

@@ -1,15 +1,16 @@
-<% provide(:title, "#{@patientName} Completed Tasks") %>
+<% provide(:title, "#{@patientName}'s Completed Tasks") %>
 <body>
 	<div class="container">
-		<h1><%= @patientName %> Completed Tasks</h1>
-		<ul>
-			<% if @tasksCompleted.length == 0 %>
-				<li>None</li>
-			<% else %>
-				<% @tasksCompleted.each do |task, dateTime| %>
-					<li><%= task %> - <%= dateTime %></li>
-				<% end %>
-			<% end %>
-		</ul>
+		<h1><%= @patientName %>'s Completed Tasks</h1>
+		<table class="table table-bordered">
+		  <thead>
+        <th>Task</th><th>DateTime</th>
+		  </thead>
+      <% @tasksCompleted.each do |task, dateTime| %>
+      <tr>
+        <td><%= task %></td><td><%= dateTime %></td>
+      </tr>
+      <% end %>
+		</table>
 	</div>
 </body>
