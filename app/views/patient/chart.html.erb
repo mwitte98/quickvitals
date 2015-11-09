@@ -5,6 +5,9 @@
 		<p><%= link_to "Edit #{@patientName} Profile", editpatient_path, {class: "btn btn-md btn-primary"} %></p>
 		<p><%= link_to "#{@patientName} Vitals", vitalsOverview_path, {class: "btn btn-md btn-primary"} %></p>
 		
+		<div class="row">
+		<div class="col-md-8">
+
     <div class="panel panel-primary">
       <div class="panel-heading">
         <h3 class="panel-title">Medications</h3>
@@ -56,6 +59,10 @@
       </div>
     </div>
 
+    </div>
+    
+    <div class="col-md-4">
+
 		<p><%= link_to "#{@patientName} Completed Tasks", tasks_path %></p>
 		
     <div class="panel panel-primary">
@@ -79,9 +86,12 @@
         <% end %>
       </div>
     </div>
+
+		<button type="button" class="pull-right btn btn-primary btn-md" data-toggle="modal" data-target="#addTaskModal">Add Task</button>
+
+    </div>
+    </div>
 		
-		<br>
-		<button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#addTaskModal">Add Task</button>
 		
 		<!-- Modal -->
 		<div class="modal fade" id="addTaskModal" role="dialog" aria-labelledby="addTaskModalLabel">
