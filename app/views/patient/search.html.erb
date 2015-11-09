@@ -52,7 +52,7 @@
 				<div style="width:100%; height:auto; display:block; overflow:auto" class="well" >
 					<!-- TODO: get picture from patient object, rather than external url -->
 					<!-- TODO: get card to fit to contents -->
-					<img src="<%= patient[:picture] %>" height="100px" width="100px" style="float:left"></img>
+					<img src="<%= patient[:picture] %>" height="100px" style="float:left"></img>
 					<div style="float:left;" >
 						<p class="name"><%= link_to "#{patient[:firstName]} #{patient[:lastName]}", chart_path(id) %></p>
 						<p class="gender"><%= patient[:gender] %></p>
