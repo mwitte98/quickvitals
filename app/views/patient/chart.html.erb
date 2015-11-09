@@ -1,58 +1,99 @@
 <% provide(:title, "#{@patientName} Chart") %>
 <body>
 	<div class="container">
-		<h1><%= @patientName %> Chart</h1>
-		<p><%= link_to "Edit #{@patientName} Profile", editpatient_path, {class: "btn btn-md btn-primary"} %></p>
-		<p><%= link_to "#{@patientName} Vitals", vitalsOverview_path, {class: "btn btn-md btn-primary"} %></p>
-		
-		<h2>Medications</h2>
-		<ul>
-			<% if @patient[:medications].size == 0 %>
-				<li>None</li>
-			<% else %>
-				<% @patient[:medications].each do |med| %>
-					<li><%= med %></li>
-				<% end %>
-			<% end %>
+	  <ul class="list-inline">
+      <li><h1><%= @patientName %>'s Chart</h1></li>
+      <li><p><%= link_to "Edit #{@patientName} Profile", editpatient_path, {class: "btn btn-md btn-primary"} %></p></li>
+      <li><p><%= link_to "#{@patientName} Vitals", vitalsOverview_path, {class: "btn btn-md btn-primary"} %></p></li>
 		</ul>
+
+		<div class="row">
+		<div class="col-md-8">
+
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Medications</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+          <% if @patient[:medications].size == 0 %>
+            <li>None</li>
+          <% else %>
+            <% @patient[:medications].each do |med| %>
+              <li><%= med %></li>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Symptoms</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% if @patient[:symptoms].size == 0 %>
+          <li>None</li>
+        <% else %>
+          <% @patient[:symptoms].each do |symptom| %>
+            <li><%= symptom %></li>
+          <% end %>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+	
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Allergies</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+          <% if @patient[:allergies].size == 0 %>
+            <li>None</li>
+          <% else %>
+            <% @patient[:allergies].each do |allergy| %>
+              <li><%= allergy %></li>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+
+    </div>
+    
+    <div class="col-md-4">
+
 		
-		<h2>Symptoms</h2>
-		<ul>
-			<% if @patient[:symptoms].size == 0 %>
-				<li>None</li>
-			<% else %>
-				<% @patient[:symptoms].each do |symptom| %>
-					<li><%= symptom %></li>
-				<% end %>
-			<% end %>
-		</ul>
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Tasks To Complete</h3>
+      </div>
+      <div class="panel-body">
+        <% if @patient[:tasksToComplete].size == 0 %>
+          None
+        <% else %>
+          <ul class="list-group">
+          <% @patient[:tasksToComplete].each do |task| %>
+            <li class="list-group-item">
+              <div class="input-group">
+                <input type="checkbox" class="task-checkbox">
+                <span><%= task %></span>
+              </div>
+            </li>
+          <% end %>
+          </ul>
+        <% end %>
+      </div>
+    </div>
+
+		<p><%= link_to "View Completed Tasks", tasks_path, {class: "pull-right btn btn-md btn-primary"} %></p>
+		<button type="button" class="pull-right btn btn-primary btn-md" data-toggle="modal" data-target="#addTaskModal">Add Task</button>
+
+    </div>
+    </div>
 		
-		<h2>Allergies</h2>
-		<ul>
-			<% if @patient[:allergies].size == 0 %>
-				<li>None</li>
-			<% else %>
-				<% @patient[:allergies].each do |allergy| %>
-					<li><%= allergy %></li>
-				<% end %>
-			<% end %>
-		</ul>
-		
-		<p><%= link_to "#{@patientName} Completed Tasks", tasks_path %></p>
-		
-		<h2>Tasks To Complete</h2>
-		<ul>
-			<% if @patient[:tasksToComplete].size == 0 %>
-				<li>None</li>
-			<% else %>
-				<% @patient[:tasksToComplete].each do |task| %>
-					<li><%= task %></li>
-				<% end %>
-			<% end %>
-		</ul>
-		
-		<br>
-		<button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#addTaskModal">Add Task</button>
 		
 		<!-- Modal -->
 		<div class="modal fade" id="addTaskModal" role="dialog" aria-labelledby="addTaskModalLabel">
