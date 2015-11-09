@@ -65,7 +65,6 @@
     
     <div class="col-md-4">
 
-		<p><%= link_to "#{@patientName} Completed Tasks", tasks_path %></p>
 		
     <div class="panel panel-primary">
       <div class="panel-heading">
@@ -89,6 +88,7 @@
       </div>
     </div>
 
+		<p><%= link_to "View Completed Tasks", tasks_path, {class: "pull-right btn btn-md btn-primary"} %></p>
 		<button type="button" class="pull-right btn btn-primary btn-md" data-toggle="modal" data-target="#addTaskModal">Add Task</button>
 
     </div>
