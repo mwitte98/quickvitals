@@ -157,6 +157,7 @@ class PatientController < ApplicationController
           "Give massage" => "10/10/2015 10:00am",
           "Take Heart Rate" => "10/10/2015 9:45am"
         },
+        picture: "http://static.dnaindia.com/sites/default/files/2015/10/02/361285-john-cena-2.jpg",
         vitals: defaultMeasurements
       },
       "2" => {
@@ -180,6 +181,7 @@ class PatientController < ApplicationController
           "Give massage" => "10/10/2015 10:00am",
           "Take Heart Rate" => "10/10/2015 9:45am"
         },
+        picture: "https://pbs.twimg.com/profile_images/3100289763/5555be842c808066ee40f363667d4f02.jpeg",
         vitals: defaultMeasurements
       },
       "3" => {
@@ -203,6 +205,7 @@ class PatientController < ApplicationController
           "Give massage" => "10/10/2015 10:00am",
           "Take Heart Rate" => "10/10/2015 9:45am"
         },
+        picture: "http://irishdeaths.com/wp-content/uploads/2014/03/Jane-Doe-3-800x450.jpg",
         vitals: defaultMeasurements
       },
       "4" => {
@@ -226,12 +229,13 @@ class PatientController < ApplicationController
           "Give massage" => "10/10/2015 10:00am",
           "Take Heart Rate" => "10/10/2015 9:45am"
         },
+        picture: "http://www.trendfilm.com/uploads/oyuncu/2014/12/brian-cranston-986.jpg",
         vitals: defaultMeasurements
       },
       "5" => {
-        firstName: "Patient",
-        lastName: "5",
-        gender: "Male",
+        firstName: "Oprah",
+        lastName: "Winfrey",
+        gender: "Female",
         dob: "1/1/1980",
         height: "65",
         weight: "175",
@@ -249,11 +253,12 @@ class PatientController < ApplicationController
           "Give massage" => "10/10/2015 10:00am",
           "Take Heart Rate" => "10/10/2015 9:45am"
         },
+        picture: "http://49yzp92imhtx8radn224z7y1.wpengine.netdna-cdn.com/wp-content/uploads/2015/08/oprah.jpeg",
         vitals: defaultMeasurements
       },
       "6" => {
-        firstName: "Patient",
-        lastName: "6",
+        firstName: "Barack",
+        lastName: "Obama",
         gender: "Male",
         dob: "1/1/1980",
         height: "65",
@@ -272,6 +277,7 @@ class PatientController < ApplicationController
           "Give massage" => "10/10/2015 10:00am",
           "Take Heart Rate" => "10/10/2015 9:45am"
         },
+        picture: "https://upload.wikimedia.org/wikipedia/commons/e/e9/Official_portrait_of_Barack_Obama.jpg",
         vitals: defaultMeasurements
       }
     }
