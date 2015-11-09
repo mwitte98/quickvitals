@@ -1,15 +1,24 @@
 <% provide(:title, 'Register Patient') %>
 <body>
 	<div class="container">
-		<h1>Register Patient</h1>
+		<h1>Edit Patient</h1>
 
 		<div class="col-sm-6">
 				<div class="row">
 					<div class="col-sm-3">
-						<p>Name</p>
+						<p>First Name</p>
 					</div>
 					<div class="col-sm-9">
 						<input type="text" class="form-control" value=<%= @patient[:firstName] %>>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<p>Last Name</p>
+					</div>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" value=<%= @patient[:lastName] %>>
 					</div>
 				</div>
 
@@ -18,9 +27,12 @@
 						Gender
 					</div>
 
-					<div class="col-sm-9">
-						<input type="radio">Male
-						<input type="radio">Female
+					<div class="col-sm-3">
+						<input type="radio" id="maleRadio" name="gender">Male
+					</div>
+
+					<div class="col-sm-3">
+						<input type="radio" id="femaleRadio" name="gender">Female
 					</div>
 
 				</div>
@@ -31,31 +43,31 @@
 						<p>Date of Birth</p>
 					</div>
 					<div class="col-sm-3">
-							<select>
-								<option value="jan">January</option>
-								<option value="feb">February</option>
-								<option value="feb">March</option>
-								<option value="feb">April</option>
-								<option value="feb">May</option>
-								<option value="feb">June</option>
-								<option value="feb">July</option>
-								<option value="feb">August</option>
-								<option value="feb">September</option>
-								<option value="feb">October</option>
-								<option value="feb">November</option>
-								<option value="feb">December</option>
+							<select id="month">
+								<option value="1">January</option>
+								<option value="2">February</option>
+								<option value="3">March</option>
+								<option value="4">April</option>
+								<option value="5">May</option>
+								<option value="6">June</option>
+								<option value="7">July</option>
+								<option value="8">August</option>
+								<option value="9">September</option>
+								<option value="10">October</option>
+								<option value="11">November</option>
+								<option value="12">December</option>
 							</select>
 					</div>
 					<div class="col-sm-2">
-						<select id="start_date_year" name="start_date[year]">
+						<select id="date">
 							<% for i in 1..31 do %>
 								<option value="<%=i%>"><%=i%></option>
 							<% end %>
 						</select>
 					</div>
 					<div class="col-sm-4">
-						<select>
-							<option value="blank"> </option>
+						<select id="year">
+							<option  value="blank"> </option>
 							<% for i in 1900..2015 do %>
 								<option value="<%=i%>"><%=i%></option>
 							<% end %>
@@ -101,89 +113,81 @@
 						<p>Address</p>
 					</div>
 					<div class="col-sm-9">
-							<input type="text" class="form-control" value=<%= @patient[:address] %>>
+							<input type="text" class="form-control" value="<%= @patient[:address] %>">
 
 					</div>
-				</div>
-
-				<div class="row">
-
-					<div class="col-sm-3">
-					</div>
-					<div class="col-sm-9">
-							<div class="row" style="padding-top: 10px">
-								<div class="col-sm-2" style="padding-top: 5px">
-									<p>City</p>
-								</div>
-								<div class="col-sm-2" style="padding: 0px">
-									<input type="text" class="form-control" value=<%= @patient[:city] %>>
-								</div>
-								<div class="col-sm-2" style="padding-top: 5px">
-									<p>State </p>
-								</div>
-								<div class="col-sm-2" style="padding-left: 0px; padding-top: 5px">
-									<select>
-										<option value="feb">NY</option>
-										<option value="jan">AL</option>
-										<option value="feb">AK</option>
-										<option value="feb">AZ</option>
-										<option value="feb">AR</option>
-										<option value="feb">CA</option>
-										<option value="feb">CO</option>
-										<option value="feb">CT</option>
-										<option value="feb">DE</option>
-										<option value="feb">FL</option>
-										<option value="feb">GA</option>
-										<option value="feb">HI</option>
-										<option value="feb">ID</option>
-										<option value="feb">IL</option>
-										<option value="feb">IN</option>
-										<option value="feb">IA</option>
-										<option value="feb">KS</option>
-										<option value="feb">KY</option>										<option value="feb">LA</option>
-										<option value="feb">ME</option>
-										<option value="feb">MD</option>
-										<option value="feb">MA</option>
-										<option value="feb">MI</option>
-										<option value="feb">MN</option>
-										<option value="feb">MS</option>
-										<option value="feb">MO</option>
-										<option value="feb">MT</option>
-										<option value="feb">NE</option>										<option value="feb">NV</option>
-										<option value="feb">NH</option>
-										<option value="feb">NJ</option>
-										<option value="feb">NM</option>
-									</select>
-								</div>
-								<div class="col-sm-2" style="padding-top: 5px">
-									<p>Zip </p>
-								</div>
-								<div class="col-sm-2" style="padding-left: 0px">
-									<input type="text" class="form-control" value=<% @patient[:zip] %>>
-								</div>
-							</div>
-					</div>
-
 				</div>
 
 				<div class="row" style="padding-top: 10px">
-					<div class="col-sm-3" style>
-						<p>Medical History</p>
+
+					<div class="col-sm-3">
+					<p>City</p>
 					</div>
-					<div class="col-sm-9">
-						<textarea type="text" class="form-control" style="height: 50px"></textarea>
-					</div>
+					<div class="col-sm-6">
+						<input type="text" class="form-control" value=<%= @patient[:city] %>>
+
 				</div>
+				</div>
+			<div class="row" style="padding-top: 10px">
+				<div class="col-sm-3">
+				</div>
+				<div class="col-sm-1" style="padding-top: 5px">
+					<p>State </p>
+				</div>
+				<div class="col-sm-2" style="padding-top: 5px">
+					<select>
+						<option value="feb">NY</option>
+						<option value="jan">AL</option>
+						<option value="feb">AK</option>
+						<option value="feb">AZ</option>
+						<option value="feb">AR</option>
+						<option value="feb">CA</option>
+						<option value="feb">CO</option>
+						<option value="feb">CT</option>
+						<option value="feb">DE</option>
+						<option value="feb">FL</option>
+						<option value="feb">GA</option>
+						<option value="feb">HI</option>
+						<option value="feb">ID</option>
+						<option value="feb">IL</option>
+						<option value="feb">IN</option>
+						<option value="feb">IA</option>
+						<option value="feb">KS</option>
+						<option value="feb">KY</option>
+						<option value="feb">LA</option>
+						<option value="feb">ME</option>
+						<option value="feb">MD</option>
+						<option value="feb">MA</option>
+						<option value="feb">MI</option>
+						<option value="feb">MN</option>
+						<option value="feb">MS</option>
+						<option value="feb">MO</option>
+						<option value="feb">MT</option>
+						<option value="feb">NE</option>
+						<option value="feb">NV</option>
+						<option value="feb">NH</option>
+						<option value="feb">NJ</option>
+						<option value="feb">NM</option>
+					</select>
+				</div>
+				<div class="col-sm-1" style="padding-top: 5px">
+					<p>Zip </p>
+				</div>
+				<div class="col-sm-2" style="padding-left: 0px">
+					<input type="text" class="form-control" value=<%= @patient[:zip] %>>
+				</div>
+			</div>
 
 				<div class="row">
 					<div class="col-sm-3">
 						<p>Allergies</p>
 					</div>
 					<div class="col-sm-9">
-						Pollen <input type="checkbox">
-						Dust Mites <input type="checkbox">
-						Penicillin <input type="checkbox">
-						Cats/Dogs <input type="checkbox">
+						Pollen <input id="pollen" type="checkbox">
+						Dust Mites <input id="dust" type="checkbox">
+						Penicillin <input id="pen" type="checkbox">
+						Cats <input id="cat" type="checkbox">
+						Dogs <input id="dog" type="checkbox">
 						<div>
 							Other <input type="text">
 						</div>
@@ -204,7 +208,7 @@
 			<br>
 			<div class="row">
 				<%= link_to "Save", {controller: :patient, action: "home"}, {class: "btn btn-md btn-primary pull-right"} %>
-				<%= link_to "Cancel", {controller: :patient, action: "home"}, {class: "btn btn-md btn-primary pull-right"} %>
+				<%= link_to "Cancel", {controller: :patient, action: "home"}, {class: "btn btn-md btn-default pull-right"} %>
 
 			</div>
 
@@ -212,3 +216,36 @@
 
 	</div>
 </body>
+
+<script>
+var maleRadio = document.getElementById('maleRadio');
+var femaleRadio = document.getElementById('femaleRadio');
+
+var monthDropdown = document.getElementById('month');
+var dateDropdown = document.getElementById('date')
+var yearDropdown = document.getElementById('year');
+monthDropdown.value = "<%= @patient[:dob].split("/")[0]%>";
+dateDropdown.value = "<%= @patient[:dob].split("/")[1] %>";
+yearDropdown.value = "<%= @patient[:dob].split("/")[2] %>";
+
+
+if ("<%= @patient[:gender] %>" == "Male")
+	maleRadio.checked = true;
+if ("<%= @patient[:gender] %>" == "Female")
+	femaleRadio.checked = true;
+
+//Loop through allergies
+<% @patient[:allergies].each do |allergy| %>
+if ("<%= allergy %>" == "Pollen")
+	document.getElementById('pollen').checked = true;
+if ("<%= allergy %>" == "Dust Mites")
+	document.getElementById('dust').checked = true;
+if ("<%= allergy %>" == "Penicillin")
+	document.getElementById('pen').checked = true;	
+if ("<%= allergy %>" == "Cats")
+	document.getElementById('cat').checked = true;
+if ("<%= allergy %>" == "Dogs")
+	document.getElementById('dog').checked = true;
+<% end %>
+
+</script>
