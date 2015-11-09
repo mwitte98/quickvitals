@@ -19,7 +19,7 @@
 				var genderText = patientGender.textContent || patientGender.innerText || '';
 				if((maleInput && genderText.toLowerCase() == 'male') || 
 					(femaleInput && genderText.toLowerCase() == 'female')){
-					matchesFilter = true;
+					//matchesFilter = true;
 				} else {
 					matchesFilter = false;
 				}
@@ -57,6 +57,15 @@
 						<p class="name"><%= link_to "#{patient[:firstName]} #{patient[:lastName]}", chart_path(id) %></p>
 						<p class="gender"><%= patient[:gender] %></p>
 						<p class="dob"><%= patient[:dob] %></p>
+					</div>
+					<div class="btn btn-md btn-primary" style="float:right; padding-top:30px; padding-bottom:30px">
+						<%= link_to "View Chart", chart_path(id) %>
+					</div>
+					<div class="btn btn-md btn-primary" style="float:right; padding-top:30px; padding-bottom:30px">
+						<%= link_to "View Tasks", tasks_path(id) %>
+					</div>
+					<div class="btn btn-md btn-primary" style="float:right; padding-top:30px; padding-bottom:30px">
+						<%= link_to "View Vitals", vitalsOverview_path(id) %>
 					</div>
 				</div>
 			<% end %>
