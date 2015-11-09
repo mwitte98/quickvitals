@@ -58,15 +58,10 @@
 						<p class="gender"><%= patient[:gender] %></p>
 						<p class="dob"><%= patient[:dob] %></p>
 					</div>
-					<div class="btn btn-md btn-primary" style="float:right; padding-top:30px; padding-bottom:30px; margin:10px">
-						<%= link_to "View Chart", chart_path(id), {class: "btn btn-md btn-primary"}%>
-					</div>
-					<div class="btn btn-md btn-primary" style="float:right; padding-top:30px; padding-bottom:30px; margin:10px">
-						<%= link_to "View Tasks", tasks_path(id), {class: "btn btn-md btn-primary"} %>
-					</div>
-					<div class="btn btn-md btn-primary" style="float:right; padding-top:30px; padding-bottom:30px; margin:10px">
-						<%= link_to "View Vitals", vitalsOverview_path(id), {class: "btn btn-md btn-primary"} %>
-					</div>
+					
+					<%= link_to "View Completed Tasks", tasks_path(id), {class: "btn btn-md btn-primary", style: "float:right; padding-top:30px; padding-bottom:30px; margin:10px"} %>
+					<%= link_to "View Vitals", vitalsOverview_path(id), {class: "btn btn-md btn-primary", style: "float:right; padding-top:30px; padding-bottom:30px; margin:10px"} %>
+					<%= link_to "View Chart", chart_path(id), {class: "btn btn-md btn-primary", style: "float:right; padding-top:30px; padding-bottom:30px; margin:10px"}%>
 				</div>
 			<% end %>
 		</div>
