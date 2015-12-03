@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root 'patient#home'
 
   match '/registerpatient', to: 'patient#registerpatient', via: 'get'
-  match '/search', to: 'patient#search', via: 'get'
+  match '/filter', to: 'patient#filter', via: 'get'
   match '/:patientid/chart', to: 'patient#chart', via: ['get', 'post'], as: 'chart'
   match '/:patientid/editpatient', to: 'patient#editpatient', via: ['get', 'post'], as: 'editpatient'
   match '/:patientid/vitalsOverview', to: 'patient#vitalsOverview', via: ['get', 'post'], as: 'vitalsOverview'

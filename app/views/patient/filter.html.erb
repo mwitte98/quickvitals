@@ -1,0 +1,108 @@
+<% provide(:title, 'Filter') %>
+<script>
+		function filter(){
+			var nameInput = document.getElementById('filterNameInput').value;
+            var idInput = document.getElementById('filterIDInput').value;
+			var maleInput = document.getElementById('filterMaleInput').checked;
+			var femaleInput = document.getElementById('filterFemaleInput').checked;
+			var dobInput = document.getElementById('filterDobInput').value;
+			var patients = document.getElementsByClassName('well');
+			var length = patients.length;
+			for(var i = 0; i < length; i++){
+				var matchesFilter = true;
+				var parentDiv = patients[i].getElementsByTagName("div")[0]
+				var patientName = parentDiv.getElementsByClassName('name')[0];
+				var nameText = patientName.textContent || patientName.innerText || '';
+				if(nameText.toLowerCase().indexOf(nameInput.toLowerCase()) == -1){
+					matchesFilter = false;
+				}
+                var patientID = parentDiv.getElementsByClassName('patientID')[0];
+				var idText = patientID.textContent || patientID.innerText || '';
+				if(idText.toLowerCase().indexOf(idInput.toLowerCase()) == -1){
+					matchesFilter = false;
+				}
+				var patientGender = parentDiv.getElementsByClassName('gender')[0];
+				var genderText = patientGender.textContent || patientGender.innerText || '';
+				if((maleInput && genderText.toLowerCase() == 'male') || 
+					(femaleInput && genderText.toLowerCase() == 'female')){
+					//matchesFilter = true;
+				} else {
+					matchesFilter = false;
+				}
+				var patientDob = parentDiv.getElementsByClassName('dob')[0];
+				var dobText = patientDob.textContent || patientDob.innerText || '';
+				if(dobText.toLowerCase().indexOf(dobInput.toLowerCase()) == -1){
+					matchesFilter = false;
+				}
+				if(!matchesFilter){
+					patients[i].style.display = 'none';
+				} else {
+					patients[i].style.display = 'block';
+				}
+			}
+		}
+</script>
+<body>
+	<div class="container">
+		<h1>Filter</h1>
+		<div style="float:left; width:25%">
+			<form class="form-horizontal">
+                <div class="form-group">
+                    <label for="filterNameInput" class="col-sm-2 control-label">Name:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="filterNameInput" onkeyup="filter()" autofocus/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="filterIDInput" class="col-sm-2 control-label">ID:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="filterIDInput" onkeyup="filter()"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" id="filterMaleInput" onclick="filter()" checked/> Male
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" id="filterFemaleInput" onclick="filter()" checked/> Female
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="filterDobInput" class="col-sm-2 control-label">DOB:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="filterDobInput" onkeyup="filter()"/>
+                    </div>
+                </div>
+			</form>
+		</div>
+		<div style="float:left; width:75%">
+			<% @patients.each do |id, patient| %>
+				<div style="width:100%; height:auto; display:block; overflow:auto" class="well" >
+					<img src="<%= patient[:picture] %>" height="100px" style="float:left"></img>
+					<div style="float:left; margin-left: 10px;" >
+						<span class="name" style="font-size:18px;"><strong><%= link_to "#{patient[:firstName]} #{patient[:lastName]}", chart_path(id) %></strong></span><br>
+                        ID: <span class="patientID"><%= id %></span><br>
+						Gender: <span class="gender"><%= patient[:gender] %></span><br>
+						DOB: <span class="dob"><%= patient[:dob] %></span>
+					</div>
+					
+					<%= link_to tasks_path(id) do %>
+					<div class="pull-right btn btn-md btn-primary", style="padding-top:30px;  padding-bottom:30px; margin:10px; word-wrap:break-word;">
+						View Completed Tasks
+					</div>
+					<%  end %>
+					<%= link_to "View Vitals", vitalsOverview_path(id), {class: "pull-right btn btn-md btn-primary", style: "padding-top:30px; padding-bottom:30px; margin:10px"} %>
+					<%= link_to "View Chart", chart_path(id), {class: "pull-right btn btn-md btn-primary", style: "padding-top:30px; padding-bottom:30px; margin:10px"}%>
+				</div>
+			<% end %>
+		</div>
+	</div>
+</body>

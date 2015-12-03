@@ -11,15 +11,15 @@ class PatientController < ApplicationController
     add_breadcrumb "Register Patient", registerpatient_path
   end
 
-  def search
-    add_breadcrumb "Search", search_path
+  def filter
+    add_breadcrumb "Filter", filter_path
   end
 
   def chart
     @patientID = params[:patientid]
     @patient = @patients[@patientID]
     @patientName = @patient[:firstName] + " " + @patient[:lastName]
-    add_breadcrumb "Search", search_path
+    add_breadcrumb "Filter", filter_path
     add_breadcrumb "#{@patientName} Chart", chart_path(@patientID)
   end
 
@@ -27,7 +27,7 @@ class PatientController < ApplicationController
     @patientID = params[:patientid]
     @patient = @patients[@patientID]
     @patientName = @patient[:firstName] + " " + @patient[:lastName]
-    add_breadcrumb "Search", search_path
+    add_breadcrumb "Filter", filter_path
     add_breadcrumb "#{@patientName} Chart", chart_path(@patientID)
     add_breadcrumb "Edit #{@patientName} Profile", editpatient_path(@patientID)
   end
@@ -38,7 +38,7 @@ class PatientController < ApplicationController
     @patientVitals = @patients[@patientID][:vitals]
     @vitalTypes = @vitals
 
-    add_breadcrumb "Search", search_path
+    add_breadcrumb "Filter", filter_path
     add_breadcrumb "#{@patientName} Chart", chart_path(@patientID)
     add_breadcrumb "#{@patientName} Vitals", vitalsOverview_path(@patientID)
   end
@@ -62,7 +62,7 @@ class PatientController < ApplicationController
     @units = @vitals[@vitalID][:units]
     @patientVital = @patients[@patientID][:vitals][@vitalID]
 
-    add_breadcrumb "Search", search_path
+    add_breadcrumb "Filter", filter_path
     add_breadcrumb "#{@patientName} Chart", chart_path(@patientID)
     add_breadcrumb "#{@patientName} Vitals", vitalsOverview_path(@patientID)
     add_breadcrumb @vitalName, vital_path(@patientID, @vitalID)
@@ -72,7 +72,7 @@ class PatientController < ApplicationController
     @patientID = params[:patientid]
     @patientName = @patients[@patientID][:firstName] + " " + @patients[@patientID][:lastName]
     @tasksCompleted = @patients[@patientID][:tasksCompleted]
-    add_breadcrumb "Search", search_path
+    add_breadcrumb "Filter", filter_path
     add_breadcrumb "#{@patientName} Chart", chart_path(@patientID)
     add_breadcrumb "#{@patientName} Completed Tasks", tasks_path(@patientID)
   end
