@@ -121,6 +121,8 @@
 				var systolic = parseInt($('#systolic').val()),
 					diastolic = parseInt($('#diastolic').val());
 
+				if(isNaN(systolic) && isNaN(diastolic)) return;
+
 				valueToInsert = systolic + '/' + diastolic;
 				isHealthyRange = isInRange(systolic, diastolic);
 
@@ -133,6 +135,9 @@
 				});
 				<% else %>
 				var vitalValue = parseFloat($('#vitalValue').val());
+
+				if(isNaN(vitalValue)) return;
+
 				valueToInsert = vitalValue;
 				isHealthyRange = isInRange(vitalValue);
 
