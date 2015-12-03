@@ -4,73 +4,10 @@
 		<h1><%= @patientName %> Vitals</h1>
 		<% @vitals.each do |id, vital| %>
 			<%= link_to vital_path(@patientID, id) do %>
-				<div class="well col-sm-6">
+				<button class="btn btn-success col-sm-5" style="margin-bottom: 20px">
 					<h4><%= vital[:name] %></h4>
-					<div id="vital-<%= id %>-<%= @patientID %>"></div>
-				</div>
+				</button>
 			<% end %>
 		<% end %>
 	</div>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			var vitals = {};
-			var axisConfig = {
-				x: {
-					show: false,
-					type: 'timeseries',
-					tick: {
-						format: '%I %p'
-					}
-				},
-				y: {
-					show: false
-				}
-			};
-			var legendConfig = {show: false};
-			var toolTipConfig = {show: false};
-
-			<% @patientVitals.each do |id, measurements| %>
-				vitals[<%= id %>] = ["<%= @vitalTypes[id][:name] %> (<%= @vitalTypes[id][:units] %>)"].concat(
-					<%= raw measurements.to_json %>
-				);
-			<% end %>
-
-			_.each(vitals, function(measurements, id) {
-				var bindId = '#vital-' + id + '-<%= @patientID %>';
-				var actualMeasurements = measurements.slice(1);
-				console.log(actualMeasurements);
-
-				if (id != 4) {
-					c3.generate({
-						bindto: bindId,
-						data: {
-							x: 'x',
-							columns: [
-								['x'].concat(_.map(actualMeasurements, function(d) { return new Date(d.time); })),
-								[measurements[0]].concat(_.pluck(actualMeasurements, 'value'))
-							]
-						},
-						axis: axisConfig,
-						legend: legendConfig,
-						tooltip: toolTipConfig
-					});
-				} else {
-					c3.generate({
-						bindto: bindId,
-						data: {
-							x: 'x',
-							columns: [
-								['x'].concat(_.map(actualMeasurements, function(d) { return new Date(d.time); })),
-								['Systolic Pressure'].concat(_.pluck(actualMeasurements, 'value.systolic')),
-								['Diastolic Pressure'].concat(_.pluck(actualMeasurements, 'value.diastolic'))
-							]
-						},
-						axis: axisConfig,
-						legend: legendConfig,
-						tooltip: toolTipConfig
-					});
-				}
-			});
-		});
-	</script>
 </body>
