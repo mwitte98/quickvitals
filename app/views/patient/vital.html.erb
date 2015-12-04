@@ -60,6 +60,36 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			var vitalData = <%= raw @patientVital.to_json %>
+			var newMeasurements = 0;
+
+			var isInRange = function() {
+				<% if @vitalName == "Blood Pressure" %>
+					var systolic = arguments[0],
+						diastolic = arguments[1];
+
+					var sysInRange = systolic >= <%= @vitalRange[:systolic][0] %> &&
+						systolic <= <%= @vitalRange[:systolic][1] %>;
+					var diasInRange = diastolic >= <%= @vitalRange[:diastolic][0] %> &&
+						diastolic <= <%= @vitalRange[:diastolic][1] %>;
+
+					return sysInRange && diasInRange;
+				<% else %>
+					var value = arguments[0];
+					return value >= <%= @vitalRange[0] %> && value <= <%= @vitalRange[1] %>;
+				<% end %>
+			};
+
+			var showPrompt = function() {
+				<% if @vitalName == "Blood Pressure" %>
+					var systolic = arguments[0],
+						diastolic = arguments[1];
+
+					return confirm('Is ' + systolic + '/' + diastolic + ' <%= @units %> accurate?');
+				<% else %>
+					var value = arguments[0];
+					return confirm('Is ' + value + ' <%= @units %> accurate?');
+				<% end %>
+			};
 
 			var chart = c3.generate({
 		    bindto: '#vitalChart',
@@ -95,44 +125,31 @@
 			$('#new-measurement-form').submit(function(event) {
 				event.preventDefault();
 
-				var isInRange = function() {
-					<% if @vitalName == "Blood Pressure" %>
-						var systolic = arguments[0],
-							diastolic = arguments[1];
-
-						var sysInRange = systolic >= <%= @vitalRange[:systolic][0] %> &&
-							systolic <= <%= @vitalRange[:systolic][1] %>;
-						var diasInRange = diastolic >= <%= @vitalRange[:diastolic][0] %> &&
-							diastolic <= <%= @vitalRange[:diastolic][1] %>;
-
-						return sysInRange && diasInRange;
-					<% else %>
-						var value = arguments[0];
-						return value >= <%= @vitalRange[0] %> && value <= <%= @vitalRange[1] %>;
-					<% end %>
-				};
-
 				var dateFormat = d3.time.format('%b %d'),
 					dayFormat = d3.time.format('%I:%M%p');
 				var now = new Date();
-				var valueToInsert, isHealthyRange;
+				var valueToInsert, isHealthyRange, measurementCorrect;
 
 				<% if @vitalName == "Blood Pressure" %>
 				var systolic = parseInt($('#systolic').val()),
 					diastolic = parseInt($('#diastolic').val());
 
-				if(isNaN(systolic) && isNaN(diastolic)) return;
+				if(isNaN(systolic) || isNaN(diastolic)) return;
 
 				valueToInsert = systolic + '/' + diastolic;
 				isHealthyRange = isInRange(systolic, diastolic);
 
-				chart.flow({
-					columns: [
-						['x', now],
-						['Systolic Pressure (<%= @units %>)', systolic],
-						['Diastolic Pressure (<%= @units %>)', diastolic],
-					]
-				});
+				measurementCorrect = showPrompt(systolic, diastolic);
+
+				if(measurementCorrect) {
+					chart.flow({
+						columns: [
+							['x', now],
+							['Systolic Pressure (<%= @units %>)', systolic],
+							['Diastolic Pressure (<%= @units %>)', diastolic],
+						]
+					});
+				}
 				<% else %>
 				var vitalValue = parseFloat($('#vitalValue').val());
 
@@ -141,21 +158,27 @@
 				valueToInsert = vitalValue;
 				isHealthyRange = isInRange(vitalValue);
 
-				chart.flow({
-					columns: [
-						['x', now],
-						['<%= @vitalName  %> (<%= @units %>)', vitalValue]
-					]
-				});
+				measurementCorrect = showPrompt(vitalValue);
+
+				if(measurementCorrect) {
+					chart.flow({
+						columns: [
+							['x', now],
+							['<%= @vitalName  %> (<%= @units %>)', vitalValue]
+						]
+					});
+				}
 				<% end %>
 
-				$('table tr:last').after(
-					'<tr>' +
-						'<td>' + dateFormat(now) + '</td>' +
-						'<td>' + dayFormat(now) + '</td>' +
-						'<td>' + valueToInsert + ' <%= @units %></td>' +
-					'</tr>'
-				);
+				if(measurementCorrect) {
+					$('table tr:last').after(
+						'<tr>' +
+							'<td>' + dateFormat(now) + '</td>' +
+							'<td>' + dayFormat(now) + '</td>' +
+							'<td>' + valueToInsert + ' <%= @units %></td>' +
+						'</tr>'
+					);
+				}
 
 				if (!isHealthyRange) {
 					$('table tr:last').attr('class', 'danger');
