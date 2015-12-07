@@ -181,7 +181,7 @@ class PatientController < ApplicationController
           "Give massage" => "10/10/2015 10:00am",
           "Take Heart Rate" => "10/10/2015 9:45am"
         },
-        picture: "https://pbs.twimg.com/profile_images/3100289763/5555be842c808066ee40f363667d4f02.jpeg",
+        picture: "https://lh3.googleusercontent.com/-Sa9kdnhuE5E/AAAAAAAAAAI/AAAAAAAAABs/H8dhweNPuFI/photo.jpg",
         vitals: defaultMeasurements
       },
       "3" => {
