@@ -1,7 +1,7 @@
 <% provide(:title, 'Register Patient') %>
 <body>
 	<div class="container">
-		<h1>Edit Patient</h1>
+		<h1>Register Patient</h1>
 
 		<div class="col-sm-6">
 				<div class="row">
@@ -81,12 +81,14 @@
 					</div>
 					<div class="col-sm-3">
 						<input type="number" style="width: 100px">
+						inches
 					</div>
 					<div class="col-sm-2">
 						<p>Weight</p>
 					</div>
 					<div class="col-sm-4">
 						<input type="number" style="width: 100px">
+						pounds
 					</div>
 				</div>
 
@@ -183,11 +185,11 @@
 						<p>Allergies</p>
 					</div>
 					<div class="col-sm-9">
-						Pollen <input id="pollen" type="checkbox">
-						Dust Mites <input id="dust" type="checkbox">
-						Penicillin <input id="pen" type="checkbox">
-						Cats <input id="cat" type="checkbox">
-						Dogs <input id="dog" type="checkbox">
+						<input id="pollen" type="checkbox"><span class="allergy">Pollen</span>
+						<input id="dust" type="checkbox"><span class="allergy">Dust Mites</span> 
+						<input id="pen" type="checkbox"><span class="allergy">Penicillin</span> 
+						<input id="cat" type="checkbox"><span class="allergy">Cats</span> 
+						<input id="dog" type="checkbox"><span class="allergy">Dogs</span> 
 						<div>
 							Other <input type="text">
 						</div>
